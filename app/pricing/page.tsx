@@ -51,7 +51,9 @@ export default function PricingPage() {
         subtitle="Choose the perfect package for your photography needs"
         ctaText="Contact Us"
         ctaLink="/contact"
+        backgroundImage="/images/photo.jpg?height=800&width=1920"
       />
+      
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {pricingPlans.map((plan, index) => (
