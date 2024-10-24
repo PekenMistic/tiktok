@@ -64,16 +64,7 @@ export default function Home() {
       {/* Hero Section - Full height and width */}
       <section className="relative w-full min-h-[calc(100vh-4rem)]">
         {/* Background Image */}
-        <div className="absolute inset-0">
-          <Image
-            src="/avatar.jpg"
-            alt="Photography background"
-            layout="fill"
-            objectFit="cover"
-            className="brightness-50"
-            priority
-          />
-        </div>
+        
         
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/50 to-black/30" />
