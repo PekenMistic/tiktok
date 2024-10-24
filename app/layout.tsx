@@ -22,6 +22,18 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="google-site-verification" content="uXt5flb09gzMYjciDairuMSOyIUzuD3a1xrPV8RZsEI" />
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-38YVB9VHYH"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-38YVB9VHYH');
+            `,
+          }}
+        />
       </head>
       <body className={inter.className}>
         <ThemeProvider
@@ -39,4 +51,4 @@ export default function RootLayout({
       </body>
     </html>
   )
-}
+          }
