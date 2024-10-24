@@ -63,11 +63,6 @@ export default function Home() {
     <main className="flex flex-col w-full">
       {/* Hero Section - Full height and width */}
       <section className="relative w-full min-h-[calc(100vh-4rem)]">
-        {/* Background Image */}
-        
-        
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/50 to-black/30" />
 
         {/* Hero Content */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center pt-16">
