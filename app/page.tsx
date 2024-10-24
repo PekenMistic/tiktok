@@ -1,11 +1,10 @@
-// app/page.tsx
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
 import Testimonials from "@/components/Testimonials"
 import FAQ from "@/components/FAQ"
-import AnimatedSection from "@/components/AnimatedSection"
+//import AnimatedSection from "@/components/AnimatedSection"
 
 export default function Home() {
   const testimonials = [
@@ -61,90 +60,89 @@ export default function Home() {
   ]
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <AnimatedSection>
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 relative rounded-full top-4">
-          {/* Background Image */}
-          <div className="absolute inset-0 z-0 rounded-lg overflow-hidden">
-            <Image
-              src="/avatar.jpg" // Pastikan untuk mengganti dengan path gambar Anda
-              alt="Photography background"
-              layout="fill"
-              objectFit="cover"
-              className="brightness-50" // Ini akan membuat gambar sedikit lebih gelap
-              priority
-            />
-          </div>
-          
-          {/* Overlay gradient untuk memastikan teks tetap terbaca */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/50 to-black/30 z-10" />
+    <main className="flex flex-col w-full">
+      {/* Hero Section - Full height and width */}
+      <section className="relative w-full min-h-[calc(100vh-4rem)]">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/avatar.jpg"
+            alt="Photography background"
+            layout="fill"
+            objectFit="cover"
+            className="brightness-50"
+            priority
+          />
+        </div>
+        
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/50 to-black/30" />
 
-          {/* Content */}
-          <div className="container px-4 md:px-6 relative z-20">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white">
-                  Capture Your Moments with Elegance
-                </h1>
-                <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl">
-                  Professional photography services for weddings, portraits, events, and more.
-                </p>
-              </div>
-              <div className="space-x-4">
-                <Link href="/portfolio">
-                  <Button variant="secondary" className="bg-white text-black hover:bg-gray-200">
-                    View Portfolio
-                  </Button>
-                </Link>
-                <Link href="/contact">
-                  <Button variant="outline" className="text-white border-white hover:bg-white hover:text-black">
-                    Book Now
-                  </Button>
-                </Link>
-              </div>
-            </div>
+        {/* Hero Content */}
+        <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center pt-16">
+          <h1 className="max-w-4xl text-3xl font-bold tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
+            Capture Your Moments with Elegance
+          </h1>
+          <p className="max-w-[700px] mt-4 text-gray-200 md:text-xl">
+            Professional photography services for weddings, portraits, events, and more.
+          </p>
+          <div className="flex gap-4 mt-8">
+            <Link href="/portfolio">
+              <Button variant="secondary" className="bg-white text-black hover:bg-gray-200">
+                View Portfolio
+              </Button>
+            </Link>
+            <Link href="/contact">
+              <Button variant="outline" className="text-white border-white hover:bg-white hover:text-black">
+                Book Now
+              </Button>
+            </Link>
           </div>
-        </section>
-      </AnimatedSection>
+        </div>
+      </section>
 
-      <AnimatedSection>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Our Services</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {["Wedding Photography", "Portrait Sessions", "Event Coverage"].map((service) => (
-                <Card key={service}>
-                  <CardHeader>
-                    <CardTitle>{service}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription>Professional {service.toLowerCase()} tailored to your needs.</CardDescription>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+      {/* Services Section */}
+      <section className="w-full py-24">
+        <div className="container px-4 md:px-6 mx-auto">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-16">
+            Our Services
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {["Wedding Photography", "Portrait Sessions", "Event Coverage"].map((service) => (
+              <Card key={service} className="transition-transform hover:-translate-y-1">
+                <CardHeader>
+                  <CardTitle>{service}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>Professional {service.toLowerCase()} tailored to your needs.</CardDescription>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        </section>
-      </AnimatedSection>
+        </div>
+      </section>
 
-      <AnimatedSection>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Testimonials</h2>
-            <Testimonials testimonials={testimonials} />
-          </div>
-        </section>
-      </AnimatedSection>
-      
+      {/* Testimonials Section */}
+      <section className="w-full py-24 bg-gray-100">
+        <div className="container px-4 md:px-6 mx-auto">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-16">
+            Testimonials
+          </h2>
+          <Testimonials testimonials={testimonials} />
+        </div>
+      </section>
 
-      <AnimatedSection>
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Frequently Asked Questions</h2>
+      {/* FAQ Section */}
+      <section className="w-full py-24">
+        <div className="container px-4 md:px-6 mx-auto">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-16">
+            Frequently Asked Questions
+          </h2>
+          <div className="max-w-3xl mx-auto">
             <FAQ faqs={faqs} />
           </div>
-        </section>
-      </AnimatedSection>
-    </div>
+        </div>
+      </section>
+    </main>
   )
 }
