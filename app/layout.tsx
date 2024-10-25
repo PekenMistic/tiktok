@@ -9,7 +9,7 @@ import Footer from "@/components/Footer"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Elegant Captures Photography",
+  title: "Madiun Pothography",
   description: "Professional photography services for all your needs",
 }
 
