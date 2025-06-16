@@ -7,11 +7,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Calendar } from "@/components/ui/calendar"
-import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
 
 const services = [
   "Wedding Photography",
@@ -22,31 +17,60 @@ const services = [
 ]
 
 export default function BookingForm() {
-  const [date, setDate] = useState<Date>()
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    service: '',
+    date: '',
+    message: ''
+  })
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     // Here you would typically send the form data to your backend
-    console.log("Form submitted")
+    console.log("Form submitted:", formData)
+    alert("Thank you for your booking request! We'll contact you soon.")
+  }
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <Label htmlFor="name">Name</Label>
-        <Input id="name" required />
+        <Input
+          id="name"
+          value={formData.name}
+          onChange={(e) => handleInputChange('name', e.target.value)}
+          required
+        />
       </div>
       <div>
         <Label htmlFor="email">Email</Label>
-        <Input id="email" type="email" required />
+        <Input
+          id="email"
+          type="email"
+          value={formData.email}
+          onChange={(e) => handleInputChange('email', e.target.value)}
+          required
+        />
       </div>
       <div>
         <Label htmlFor="phone">Phone</Label>
-        <Input id="phone" type="tel" required />
+        <Input
+          id="phone"
+          type="tel"
+          value={formData.phone}
+          onChange={(e) => handleInputChange('phone', e.target.value)}
+          required
+        />
       </div>
       <div>
         <Label htmlFor="service">Service</Label>
-        <Select required>
+        <Select value={formData.service} onValueChange={(value) => handleInputChange('service', value)} required>
           <SelectTrigger>
             <SelectValue placeholder="Select a service" />
           </SelectTrigger>
@@ -60,35 +84,24 @@ export default function BookingForm() {
         </Select>
       </div>
       <div>
-        <Label>Preferred Date</Label>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant={"outline"}
-              className={cn(
-                "w-full justify-start text-left font-normal",
-                !date && "text-muted-foreground"
-              )}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {date ? format(date, "PPP") : <span>Pick a date</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
+        <Label htmlFor="date">Preferred Date</Label>
+        <Input
+          id="date"
+          type="date"
+          value={formData.date}
+          onChange={(e) => handleInputChange('date', e.target.value)}
+          required
+        />
       </div>
       <div>
         <Label htmlFor="message">Additional Information</Label>
-        <Textarea id="message" />
+        <Textarea
+          id="message"
+          value={formData.message}
+          onChange={(e) => handleInputChange('message', e.target.value)}
+        />
       </div>
-      <Button type="submit">Book Session</Button>
+      <Button type="submit" className="w-full">Book Session</Button>
     </form>
   )
 }

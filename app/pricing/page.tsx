@@ -1,7 +1,7 @@
 // app/pricing/page.tsx
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import Hero from "@/components/Hero"
+import SimpleHero from "@/components/SimpleHero"
 import Link from "next/link"
 
 const pricingPlans = [
@@ -46,12 +46,12 @@ const pricingPlans = [
 export default function PricingPage() {
   return (
     <div>
-      <Hero
+      <SimpleHero
         title="Our Pricing"
         subtitle="Choose the perfect package for your photography needs"
         ctaText="Contact Us"
         ctaLink="/contact"
-        backgroundImage="/images/photo.jpg?height=800&width=1920"
+        backgroundImage="/images/photo.jpg"
       />
       
       <div className="container mx-auto px-4 py-12">

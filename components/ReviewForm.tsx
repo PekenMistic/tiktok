@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { StarIcon } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+
 
 export default function ReviewForm() {
   const [rating, setRating] = useState(0)
@@ -14,7 +14,7 @@ export default function ReviewForm() {
   const [email, setEmail] = useState("")
   const [review, setReview] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { toast } = useToast()
+
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -30,10 +30,7 @@ export default function ReviewForm() {
       })
 
       if (response.ok) {
-        toast({
-          title: "Review Submitted",
-          description: "Thank you for your feedback!",
-        })
+        alert("Review submitted successfully! Thank you for your feedback!")
         setName("")
         setEmail("")
         setRating(0)
@@ -45,11 +42,7 @@ export default function ReviewForm() {
       if (error instanceof Error) {
         console.error("Error:", error.message)  // Menangani error jika itu objek `Error`
       }
-      toast({
-        title: "Error",
-        description: "Failed to submit review. Please try again.",
-        variant: "destructive",
-      })
+      alert("Failed to submit review. Please try again.")
     } finally {
       setIsSubmitting(false)
     }

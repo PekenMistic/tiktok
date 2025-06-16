@@ -1,17 +1,38 @@
 // app/layout.tsx
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter, Playfair_Display, Montserrat } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/ThemeProvider"
+import { DataProvider } from "@/lib/data-context"
+import { DatabaseProvider } from "@/lib/database-context"
+import { ToastProvider } from "@/components/ui/luxury-toast"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
+import { generateMetadata, structuredData } from "@/lib/seo-config"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap"
+})
 
-export const metadata: Metadata = {
-  title: "Madiun Pothography",
-  description: "Professional photography services for all your needs",
-}
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap"
+})
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-montserrat",
+  display: "swap"
+})
+
+export const metadata: Metadata = generateMetadata({
+  title: "Professional Photography Services in Madiun",
+  description: "Capture your precious moments with Madiun Photography. Specializing in weddings, portraits, events, and commercial photography with artistic vision and technical excellence.",
+})
 
 export default function RootLayout({
   children,
@@ -22,6 +43,20 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="google-site-verification" content="uXt5flb09gzMYjciDairuMSOyIUzuD3a1xrPV8RZsEI" />
+        <link rel="canonical" href="https://madiunphotography.com" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#7c3aed" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Madiun Photography" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-38YVB9VHYH"></script>
         <script
           dangerouslySetInnerHTML={{
@@ -43,7 +78,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${playfair.variable} ${montserrat.variable} font-sans antialiased`}>
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-M75R3SVR"
@@ -59,11 +94,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-          </div>
+          <ToastProvider>
+            <DatabaseProvider>
+              <DataProvider>
+              <div className="flex flex-col min-h-screen">
+                <Navbar />
+                <main className="flex-grow">{children}</main>
+                <Footer />
+              </div>
+            </DataProvider>
+            </DatabaseProvider>
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>

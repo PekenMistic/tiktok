@@ -1,5 +1,5 @@
 // app/reviews/page.tsx
-import Hero from "@/components/Hero"
+import SimpleHero from "@/components/SimpleHero"
 import Reviews from "@/components/Reviews"
 import ReviewForm from "@/components/ReviewForm"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -31,12 +31,12 @@ const reviews = [
 export default function ReviewsPage() {
   return (
     <div>
-      <Hero
+      <SimpleHero
         title="Reviews"
         subtitle="See what our clients have to say about their experience"
         ctaText="Book a Session"
         ctaLink="/book"
-        backgroundImage="/images/photo.jpg?height=800&width=1920"
+        backgroundImage="/images/photo.jpg"
       />
       <div className="container mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold mb-8">Recent Reviews</h2>
