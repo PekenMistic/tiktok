@@ -1,36 +1,212 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📸 Professional Photography Website
 
-## Getting Started
+A modern, full-featured photography website built with Next.js, TypeScript, and Drizzle ORM.
 
-First, run the development server:
+## ✨ Features
 
+### 🎨 Frontend
+- **Modern UI/UX** with responsive design
+- **Portfolio Gallery** with dynamic filtering and lightbox
+- **Service Listings** with detailed descriptions
+- **Booking System** with form validation
+- **Blog System** with dynamic content
+- **Contact Forms** with message handling
+- **Admin Dashboard** for content management
+- **Dark/Light Theme** support
+
+### 🛠️ Backend
+- **Next.js 14** with App Router
+- **TypeScript** for type safety
+- **Drizzle ORM** for database operations
+- **PostgreSQL** database (Neon)
+- **RESTful API** endpoints
+- **Server-side rendering** and static generation
+
+### 🔧 Technical Stack
+- **Framework**: Next.js 14.2.30
+- **Language**: TypeScript
+- **Database**: PostgreSQL with Drizzle ORM
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Deployment**: Vercel
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- PostgreSQL database
+
+### Installation
+
+1. **Clone the repository**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd photography-website
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install dependencies**
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Environment Setup**
+```bash
+cp .env.example .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. **Configure environment variables**
+```env
+DATABASE_URL="your-postgresql-connection-string"
+NEXTAUTH_SECRET="your-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+```
 
-## Learn More
+5. **Run database migrations**
+```bash
+npm run db:push
+```
 
-To learn more about Next.js, take a look at the following resources:
+6. **Start development server**
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Visit `http://localhost:3000` to see the website.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📁 Project Structure
 
-## Deploy on Vercel
+```
+├── app/                    # Next.js App Router
+│   ├── api/               # API routes
+│   ├── admin/             # Admin dashboard
+│   ├── (pages)/           # Public pages
+│   └── globals.css        # Global styles
+├── components/            # Reusable components
+├── lib/                   # Utilities and configurations
+│   ├── database/          # Database schema and config
+│   └── utils.ts           # Helper functions
+├── public/                # Static assets
+└── drizzle/              # Database migrations
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔧 Available Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run db:push` - Push database schema
+- `npm run db:studio` - Open Drizzle Studio
+
+## 📊 Code Quality
+
+- ✅ **Zero ESLint warnings/errors**
+- ✅ **TypeScript strict mode**
+- ✅ **Professional code standards**
+- ✅ **Type-safe database operations**
+- ✅ **Comprehensive error handling**
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. **Connect to Vercel**
+2. **Set environment variables**
+3. **Deploy automatically**
+
+### Environment Variables for Production
+```env
+DATABASE_URL="your-production-database-url"
+NEXTAUTH_SECRET="your-production-secret"
+NEXTAUTH_URL="https://your-domain.vercel.app"
+```
+
+## 📝 API Endpoints
+
+- `GET /api/portfolio` - Portfolio items
+- `GET /api/services` - Service listings
+- `GET /api/bookings` - Booking management
+- `GET /api/reviews` - Customer reviews
+- `GET /api/messages` - Contact messages
+- `GET /api/blog` - Blog posts
+- `GET /api/faqs` - FAQ items
+
+## 🎯 Features Overview
+
+### Portfolio Management
+- Dynamic image galleries
+- Category filtering
+- Featured items
+- Search functionality
+
+### Booking System
+- Service selection
+- Date/time scheduling
+- Client information capture
+- Status tracking
+
+### Content Management
+- Blog post creation
+- FAQ management
+- Service updates
+- Review moderation
+
+### Admin Dashboard
+- Complete CRUD operations
+- Analytics and statistics
+- User management
+- Content moderation
+
+## 🔒 Security
+
+- Input validation on all forms
+- SQL injection protection
+- XSS prevention
+- CSRF protection
+- Environment variable security
+
+## 📱 Responsive Design
+
+- Mobile-first approach
+- Tablet optimization
+- Desktop enhancement
+- Cross-browser compatibility
+
+## 🎨 UI/UX Features
+
+- Modern design system
+- Smooth animations
+- Loading states
+- Error handling
+- Accessibility compliance
+
+## 📈 Performance
+
+- Server-side rendering
+- Static site generation
+- Image optimization
+- Code splitting
+- Lazy loading
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch
+3. Commit changes
+4. Push to branch
+5. Create Pull Request
+
+## 📄 License
+
+This project is private and proprietary.
+
+## 📞 Support
+
+For support and questions, please contact the development team.
+
+---
+
+**Built with ❤️ using Next.js and TypeScript**
