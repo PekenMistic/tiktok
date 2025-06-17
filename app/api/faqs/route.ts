@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database/config';
 import { faqs } from '@/lib/database/schema';
 import { eq, asc, and } from 'drizzle-orm';
-
 // GET - Fetch all FAQs
 export async function GET(request: NextRequest) {
   try {

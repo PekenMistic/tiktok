@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database/config';
 import { bookings, services } from '@/lib/database/schema';
 import { desc, eq, and, gte, lte } from 'drizzle-orm';
+import type { SQL } from 'drizzle-orm';
+
 
 // GET - Fetch all bookings
 export async function GET(request: NextRequest) {
@@ -39,7 +41,7 @@ export async function GET(request: NextRequest) {
     .leftJoin(services, eq(bookings.serviceId, services.id));
 
     // Build where conditions
-    const whereConditions: any[] = [];
+    const whereConditions: SQL[] = [];
     if (status && status !== 'all') {
       whereConditions.push(eq(bookings.status, status));
     }
