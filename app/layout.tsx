@@ -58,6 +58,9 @@ export default function RootLayout({
             __html: JSON.stringify(structuredData),
           }}
         />
+
+      </head>
+      <body className={`${inter.variable} ${playfair.variable} ${montserrat.variable} font-sans antialiased`}>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-38YVB9VHYH"
           strategy="afterInteractive"
@@ -77,8 +80,7 @@ export default function RootLayout({
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-M75R3SVR');`}
         </Script>
-      </head>
-      <body className={`${inter.variable} ${playfair.variable} ${montserrat.variable} font-sans antialiased`}>
+
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-M75R3SVR"
