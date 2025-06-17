@@ -15,39 +15,45 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
 
     // Build base query
-    let baseQuery = db.select().from(reviews);
-    const conditions: any[] = [];
+    const baseQuery = db.select().from(reviews);
 
+    // Build where conditions
+    const whereConditions = [];
     if (approved === 'true') {
-      conditions.push(eq(reviews.approved, true));
+      whereConditions.push(eq(reviews.approved, true));
     } else if (approved === 'false') {
-      conditions.push(eq(reviews.approved, false));
+      whereConditions.push(eq(reviews.approved, false));
     }
-
     if (featured === 'true') {
-      conditions.push(eq(reviews.featured, true));
+      whereConditions.push(eq(reviews.featured, true));
     }
-
     if (serviceType && serviceType !== 'all') {
-      conditions.push(eq(reviews.serviceType, serviceType));
+      whereConditions.push(eq(reviews.serviceType, serviceType));
     }
-
     if (minRating) {
-      conditions.push(gte(reviews.rating, parseInt(minRating)));
+      whereConditions.push(gte(reviews.rating, parseInt(minRating)));
     }
 
-    // Apply where conditions if any exist
-    let finalQuery = baseQuery;
-    if (conditions.length === 1) {
-      finalQuery = baseQuery.where(conditions[0]);
-    } else if (conditions.length > 1) {
-      finalQuery = baseQuery.where(and(...conditions));
+    // Execute query with or without conditions
+    let reviewList;
+    if (whereConditions.length === 0) {
+      reviewList = await baseQuery
+        .orderBy(desc(reviews.createdAt))
+        .limit(limit)
+        .offset(offset);
+    } else if (whereConditions.length === 1) {
+      reviewList = await baseQuery
+        .where(whereConditions[0])
+        .orderBy(desc(reviews.createdAt))
+        .limit(limit)
+        .offset(offset);
+    } else {
+      reviewList = await baseQuery
+        .where(and(...whereConditions))
+        .orderBy(desc(reviews.createdAt))
+        .limit(limit)
+        .offset(offset);
     }
-
-    const reviewList = await finalQuery
-      .orderBy(desc(reviews.createdAt))
-      .limit(limit)
-      .offset(offset);
 
     return NextResponse.json({
       success: true,

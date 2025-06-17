@@ -14,35 +14,40 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
 
     // Build base query
-    let baseQuery = db.select().from(portfolioItems);
-    const conditions: any[] = [];
+    const baseQuery = db.select().from(portfolioItems);
 
+    // Build where conditions
+    const whereConditions = [];
     if (category && category !== 'All') {
-      conditions.push(eq(portfolioItems.category, category));
+      whereConditions.push(eq(portfolioItems.category, category));
     }
-
     if (featured === 'true') {
-      conditions.push(eq(portfolioItems.featured, true));
+      whereConditions.push(eq(portfolioItems.featured, true));
     }
-
     if (search) {
-      conditions.push(
-        ilike(portfolioItems.title, `%${search}%`)
-      );
+      whereConditions.push(ilike(portfolioItems.title, `%${search}%`));
     }
 
-    // Apply where conditions if any exist
-    let finalQuery = baseQuery;
-    if (conditions.length === 1) {
-      finalQuery = baseQuery.where(conditions[0]);
-    } else if (conditions.length > 1) {
-      finalQuery = baseQuery.where(and(...conditions));
+    // Execute query with or without conditions
+    let items;
+    if (whereConditions.length === 0) {
+      items = await baseQuery
+        .orderBy(desc(portfolioItems.createdAt))
+        .limit(limit)
+        .offset(offset);
+    } else if (whereConditions.length === 1) {
+      items = await baseQuery
+        .where(whereConditions[0])
+        .orderBy(desc(portfolioItems.createdAt))
+        .limit(limit)
+        .offset(offset);
+    } else {
+      items = await baseQuery
+        .where(and(...whereConditions))
+        .orderBy(desc(portfolioItems.createdAt))
+        .limit(limit)
+        .offset(offset);
     }
-
-    const items = await finalQuery
-      .orderBy(desc(portfolioItems.createdAt))
-      .limit(limit)
-      .offset(offset);
 
     return NextResponse.json({
       success: true,

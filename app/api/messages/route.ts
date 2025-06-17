@@ -14,35 +14,40 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
 
     // Build base query
-    let baseQuery = db.select().from(messages);
-    const conditions: any[] = [];
+    const baseQuery = db.select().from(messages);
 
+    // Build where conditions
+    const whereConditions = [];
     if (status && status !== 'all') {
-      conditions.push(eq(messages.status, status));
+      whereConditions.push(eq(messages.status, status));
     }
-
     if (priority && priority !== 'all') {
-      conditions.push(eq(messages.priority, priority));
+      whereConditions.push(eq(messages.priority, priority));
     }
-
     if (search) {
-      conditions.push(
-        ilike(messages.subject, `%${search}%`)
-      );
+      whereConditions.push(ilike(messages.subject, `%${search}%`));
     }
 
-    // Apply where conditions if any exist
-    let finalQuery = baseQuery;
-    if (conditions.length === 1) {
-      finalQuery = baseQuery.where(conditions[0]);
-    } else if (conditions.length > 1) {
-      finalQuery = baseQuery.where(and(...conditions));
+    // Execute query with or without conditions
+    let messageList;
+    if (whereConditions.length === 0) {
+      messageList = await baseQuery
+        .orderBy(desc(messages.createdAt))
+        .limit(limit)
+        .offset(offset);
+    } else if (whereConditions.length === 1) {
+      messageList = await baseQuery
+        .where(whereConditions[0])
+        .orderBy(desc(messages.createdAt))
+        .limit(limit)
+        .offset(offset);
+    } else {
+      messageList = await baseQuery
+        .where(and(...whereConditions))
+        .orderBy(desc(messages.createdAt))
+        .limit(limit)
+        .offset(offset);
     }
-
-    const messageList = await finalQuery
-      .orderBy(desc(messages.createdAt))
-      .limit(limit)
-      .offset(offset);
 
     return NextResponse.json({
       success: true,

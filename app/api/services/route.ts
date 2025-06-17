@@ -14,33 +14,40 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
 
     // Build base query
-    let baseQuery = db.select().from(services);
-    const conditions: any[] = [];
+    const baseQuery = db.select().from(services);
 
+    // Build where conditions
+    const whereConditions = [];
     if (active === 'true') {
-      conditions.push(eq(services.active, true));
+      whereConditions.push(eq(services.active, true));
     }
-
     if (popular === 'true') {
-      conditions.push(eq(services.popular, true));
+      whereConditions.push(eq(services.popular, true));
     }
-
     if (category && category !== 'all') {
-      conditions.push(eq(services.category, category));
+      whereConditions.push(eq(services.category, category));
     }
 
-    // Apply where conditions if any exist
-    let finalQuery = baseQuery;
-    if (conditions.length === 1) {
-      finalQuery = baseQuery.where(conditions[0]);
-    } else if (conditions.length > 1) {
-      finalQuery = baseQuery.where(and(...conditions));
+    // Execute query with or without conditions
+    let serviceList;
+    if (whereConditions.length === 0) {
+      serviceList = await baseQuery
+        .orderBy(desc(services.createdAt))
+        .limit(limit)
+        .offset(offset);
+    } else if (whereConditions.length === 1) {
+      serviceList = await baseQuery
+        .where(whereConditions[0])
+        .orderBy(desc(services.createdAt))
+        .limit(limit)
+        .offset(offset);
+    } else {
+      serviceList = await baseQuery
+        .where(and(...whereConditions))
+        .orderBy(desc(services.createdAt))
+        .limit(limit)
+        .offset(offset);
     }
-
-    const serviceList = await finalQuery
-      .orderBy(desc(services.createdAt))
-      .limit(limit)
-      .offset(offset);
 
     return NextResponse.json({
       success: true,

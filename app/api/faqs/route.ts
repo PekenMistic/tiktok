@@ -11,26 +11,30 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get('category');
 
     // Build base query
-    let baseQuery = db.select().from(faqs);
+    const baseQuery = db.select().from(faqs);
 
-    // Apply filters
-    const conditions: any[] = [];
+    // Build where conditions
+    const whereConditions = [];
     if (active === 'true') {
-      conditions.push(eq(faqs.active, true));
+      whereConditions.push(eq(faqs.active, true));
     }
     if (category) {
-      conditions.push(eq(faqs.category, category));
+      whereConditions.push(eq(faqs.category, category));
     }
 
-    // Apply where conditions if any exist
-    let finalQuery = baseQuery;
-    if (conditions.length === 1) {
-      finalQuery = baseQuery.where(conditions[0]);
-    } else if (conditions.length > 1) {
-      finalQuery = baseQuery.where(and(...conditions));
+    // Execute query with or without conditions
+    let faqList;
+    if (whereConditions.length === 0) {
+      faqList = await baseQuery.orderBy(asc(faqs.order));
+    } else if (whereConditions.length === 1) {
+      faqList = await baseQuery
+        .where(whereConditions[0])
+        .orderBy(asc(faqs.order));
+    } else {
+      faqList = await baseQuery
+        .where(and(...whereConditions))
+        .orderBy(asc(faqs.order));
     }
-
-    const faqList = await finalQuery.orderBy(asc(faqs.order));
 
     return NextResponse.json({
       success: true,

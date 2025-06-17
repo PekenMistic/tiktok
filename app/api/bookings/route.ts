@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
 
     // Build base query
-    let baseQuery = db.select({
+    const baseQuery = db.select({
       id: bookings.id,
       clientName: bookings.clientName,
       email: bookings.email,
@@ -38,33 +38,38 @@ export async function GET(request: NextRequest) {
     .from(bookings)
     .leftJoin(services, eq(bookings.serviceId, services.id));
 
-    // Build conditions array
-    const conditions: any[] = [];
-
+    // Build where conditions
+    const whereConditions = [];
     if (status && status !== 'all') {
-      conditions.push(eq(bookings.status, status));
+      whereConditions.push(eq(bookings.status, status));
     }
-
     if (startDate) {
-      conditions.push(gte(bookings.eventDate, startDate));
+      whereConditions.push(gte(bookings.eventDate, startDate));
     }
-
     if (endDate) {
-      conditions.push(lte(bookings.eventDate, endDate));
+      whereConditions.push(lte(bookings.eventDate, endDate));
     }
 
-    // Apply where conditions if any exist
-    let finalQuery = baseQuery;
-    if (conditions.length === 1) {
-      finalQuery = baseQuery.where(conditions[0]);
-    } else if (conditions.length > 1) {
-      finalQuery = baseQuery.where(and(...conditions));
+    // Execute query with or without conditions
+    let bookingList;
+    if (whereConditions.length === 0) {
+      bookingList = await baseQuery
+        .orderBy(desc(bookings.createdAt))
+        .limit(limit)
+        .offset(offset);
+    } else if (whereConditions.length === 1) {
+      bookingList = await baseQuery
+        .where(whereConditions[0])
+        .orderBy(desc(bookings.createdAt))
+        .limit(limit)
+        .offset(offset);
+    } else {
+      bookingList = await baseQuery
+        .where(and(...whereConditions))
+        .orderBy(desc(bookings.createdAt))
+        .limit(limit)
+        .offset(offset);
     }
-
-    const bookingList = await finalQuery
-      .orderBy(desc(bookings.createdAt))
-      .limit(limit)
-      .offset(offset);
 
     return NextResponse.json({
       success: true,
