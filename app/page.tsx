@@ -13,6 +13,7 @@ export const metadata = generateMetadata({
 
 export default function Home() {
   // FAQs are now managed through the database via LuxuryFAQ component
+  // Updated for Vercel deployment - December 2024
 
   return (
     <main className="flex flex-col w-full">
