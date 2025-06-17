@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     .leftJoin(services, eq(bookings.serviceId, services.id));
 
     // Build where conditions
-    const whereConditions = [];
+    const whereConditions: any[] = [];
     if (status && status !== 'all') {
       whereConditions.push(eq(bookings.status, status));
     }

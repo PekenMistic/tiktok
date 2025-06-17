@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const baseQuery = db.select().from(services);
 
     // Build where conditions
-    const whereConditions = [];
+    const whereConditions: any[] = [];
     if (active === 'true') {
       whereConditions.push(eq(services.active, true));
     }

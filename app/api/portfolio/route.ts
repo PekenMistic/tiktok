@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const baseQuery = db.select().from(portfolioItems);
 
     // Build where conditions
-    const whereConditions = [];
+    const whereConditions: any[] = [];
     if (category && category !== 'All') {
       whereConditions.push(eq(portfolioItems.category, category));
     }

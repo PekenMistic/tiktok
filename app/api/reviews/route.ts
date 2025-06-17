@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     const baseQuery = db.select().from(reviews);
 
     // Build where conditions
-    const whereConditions = [];
+    const whereConditions: any[] = [];
     if (approved === 'true') {
       whereConditions.push(eq(reviews.approved, true));
     } else if (approved === 'false') {

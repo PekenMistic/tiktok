@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const baseQuery = db.select().from(messages);
 
     // Build where conditions
-    const whereConditions = [];
+    const whereConditions: any[] = [];
     if (status && status !== 'all') {
       whereConditions.push(eq(messages.status, status));
     }

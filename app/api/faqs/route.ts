@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     const baseQuery = db.select().from(faqs);
 
     // Build where conditions
-    const whereConditions = [];
+    const whereConditions: any[] = [];
     if (active === 'true') {
       whereConditions.push(eq(faqs.active, true));
     }
