@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Hearts, Award, Zap, Star, ArrowRight, CheckCircle } from "lucide-react";
+import { Heart, Award, Zap, Star, ArrowRight, CheckCircle, Camera, Users } from "lucide-react";
 
 import { EnhancedButton } from "@/components/ui/enhanced-button";
 import { EnhancedCard, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/enhanced-card";

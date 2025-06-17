@@ -1,15 +1,15 @@
-"use client";
+﻿"use client";
 
-import React from &apos;react&apos;;
-import { motion } from &apos;framer-motion&apos;;
-import { Camera, ArrowRight, Star, Heart, Award, Users } from &apos;lucide-react&apos;;
-import { EnhancedButton } from &apos;@/components/ui/enhanced-button&apos;;
-import Link from &apos;next/link&apos;;
-import Image from &apos;next/image&apos;;
-import { useDatabase } from &apos;@/lib/database-context&apos;;
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Camera, ArrowRight, Star, Heart, Award, Users } from 'lucide-react';
+import { EnhancedButton } from '@/components/ui/enhanced-button';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useDatabase } from '@/lib/database-context';
 
 const LuxuryCTA = () => {
-  const { stats, loading } = useDatabase();
+  const { stats } = useDatabase();
 
   // Default stats if no data from database
   const displayStats = [
@@ -41,8 +41,8 @@ const LuxuryCTA = () => {
       <div className="absolute inset-0">
         {/* Geometric Patterns */}
         <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-luxury-gold-400/20 to-luxury-teal-400/20 rounded-full blur-3xl animate-luxury-float"></div>
-        <div className="absolute bottom-20 right-10 w-32 h-32 bg-gradient-to-br from-luxury-teal-400/20 to-luxury-gold-400/20 rounded-full blur-3xl animate-luxury-float" style={{ animationDelay: &apos;2s&apos; }}></div>
-        <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-gradient-to-br from-luxury-gold-400/10 to-luxury-teal-400/10 rounded-full blur-2xl animate-luxury-float" style={{ animationDelay: &apos;4s&apos; }}></div>
+        <div className="absolute bottom-20 right-10 w-32 h-32 bg-gradient-to-br from-luxury-teal-400/20 to-luxury-gold-400/20 rounded-full blur-3xl animate-luxury-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-gradient-to-br from-luxury-gold-400/10 to-luxury-teal-400/10 rounded-full blur-2xl animate-luxury-float" style={{ animationDelay: '4s' }}></div>
         
         {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(243,167,63,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(243,167,63,0.02)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
@@ -284,3 +284,4 @@ const LuxuryCTA = () => {
 };
 
 export default LuxuryCTA;
+

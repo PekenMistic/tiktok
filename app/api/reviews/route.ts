@@ -35,7 +35,9 @@ export async function GET(request: NextRequest) {
       conditions.push(gte(reviews.rating, parseInt(minRating)));
     }
 
-    if (conditions.length > 0) {
+    if (conditions.length === 1) {
+      query = query.where(conditions[0]);
+    } else if (conditions.length > 1) {
       query = query.where(and(...conditions));
     }
 

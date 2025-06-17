@@ -15,7 +15,7 @@ import Image from "next/image"
 import { useDatabase } from "@/lib/database-context"
 
 export default function BlogManager() {
-  const { blogPosts, addBlogPost, updateBlogPost, deleteBlogPost } = useDatabase()
+  const { blogPosts, addBlogPost, updateBlogPost, deleteBlogPost, loading, error } = useDatabase()
 
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [editingPost, setEditingPost] = useState<{id: string; title: string; content: string; author: string; category: string; tags: string; image: string; featured: boolean; published: boolean; readTime: string} | null>(null)
@@ -64,15 +64,15 @@ export default function BlogManager() {
     }
   }
 
-  const handleEditPost = (post: {id: string; title: string; content: string; author: string; category: string; tags: string; image: string; featured: boolean; published: boolean; readTime: string}) => {
+  const handleEditPost = (post: BlogPost) => {
     setEditingPost(post)
     setNewPost({
       title: post.title,
-      excerpt: post.excerpt,
+      excerpt: post.excerpt || '',
       content: post.content,
       author: post.author,
       category: post.category,
-      tags: Array.isArray(post.tags) ? post.tags.join(', ') : '',
+      tags: Array.isArray(post.tags) ? post.tags.join(', ') : (post.tags || ''),
       image: post.image,
       featured: post.featured,
       published: post.published,

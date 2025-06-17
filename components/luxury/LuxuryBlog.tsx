@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -9,22 +9,6 @@ import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useDatabase } from '@/lib/database-context';
-
-// interface BlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  author: string;
-  date: string;
-  readTime: string;
-  category: string;
-  tags: string[];
-  image: string;
-  featured: boolean;
-  views: number;
-  likes: number;
-}
 
 const LuxuryBlog: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -331,3 +315,4 @@ const LuxuryBlog: React.FC = () => {
 };
 
 export default LuxuryBlog;
+

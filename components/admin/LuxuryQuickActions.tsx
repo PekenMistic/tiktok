@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import {
   Upload,
@@ -18,7 +18,7 @@ import { EnhancedButton } from '@/components/ui/enhanced-button';
 import { usePhotographyToast } from '@/components/ui/luxury-toast';
 
 const LuxuryQuickActions: React.FC = () => {
-  const [isUploading, setIsUploading] = useState(false);
+  // const [isUploading, setIsUploading] = useState(false);
   const toast = usePhotographyToast();
 
   const quickActions = [

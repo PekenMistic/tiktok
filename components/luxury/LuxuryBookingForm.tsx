@@ -1,33 +1,33 @@
-"use client";
+﻿"use client";
 
-import React, { useState } from &apos;react&apos;;
-import { motion } from &apos;framer-motion&apos;;
-import { Calendar, Clock, Camera, User, Mail, Phone, MapPin, Heart, Star, Send } from &apos;lucide-react&apos;;
-import { EnhancedCard, CardHeader, CardTitle, CardContent } from &apos;@/components/ui/enhanced-card&apos;;
-import { EnhancedButton } from &apos;@/components/ui/enhanced-button&apos;;
-import { Input } from &apos;@/components/ui/input&apos;;
-import { Label } from &apos;@/components/ui/label&apos;;
-import { Textarea } from &apos;@/components/ui/textarea&apos;;
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from &apos;@/components/ui/select&apos;;
-import { useDatabase } from &apos;@/lib/database-context&apos;;
-import { usePhotographyToast } from &apos;@/components/ui/luxury-toast&apos;;
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Calendar, Camera, User, Heart, Star, Send } from 'lucide-react';
+import { EnhancedCard, CardHeader, CardTitle, CardContent } from '@/components/ui/enhanced-card';
+import { EnhancedButton } from '@/components/ui/enhanced-button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useDatabase } from '@/lib/database-context';
+import { usePhotographyToast } from '@/components/ui/luxury-toast';
 
 const LuxuryBookingForm: React.FC = () => {
   const { addBooking, services, loading } = useDatabase();
   const toast = usePhotographyToast();
   
   const [formData, setFormData] = useState({
-    name: &apos;&apos;,
-    email: &apos;&apos;,
-    phone: &apos;&apos;,
-    service: &apos;&apos;,
-    date: &apos;&apos;,
-    time: &apos;&apos;,
-    location: &apos;&apos;,
-    guests: &apos;&apos;,
-    budget: &apos;&apos;,
-    message: &apos;&apos;,
-    package: &apos;&apos;
+    name: '',
+    email: '',
+    phone: '',
+    service: '',
+    date: '',
+    time: '',
+    location: '',
+    guests: '',
+    budget: '',
+    message: '',
+    package: ''
   });
 
   // Get active services from database
@@ -36,13 +36,13 @@ const LuxuryBookingForm: React.FC = () => {
   // Map service category to icon
   const getServiceIcon = (category: string) => {
     switch (category?.toLowerCase()) {
-      case &apos;wedding&apos;:
+      case 'wedding':
         return Heart;
-      case &apos;portrait&apos;:
+      case 'portrait':
         return User;
-      case &apos;event&apos;:
+      case 'event':
         return Camera;
-      case &apos;commercial&apos;:
+      case 'commercial':
         return Star;
       default:
         return Camera;
@@ -50,10 +50,10 @@ const LuxuryBookingForm: React.FC = () => {
   };
 
   const packages = [
-    { value: &apos;basic&apos;, label: &apos;Basic Package&apos;, description: &apos;4 hours coverage, 50 edited photos&apos; },
-    { value: &apos;standard&apos;, label: &apos;Standard Package&apos;, description: &apos;6 hours coverage, 100 edited photos&apos; },
-    { value: &apos;premium&apos;, label: &apos;Premium Package&apos;, description: &apos;8 hours coverage, 200 edited photos&apos; },
-    { value: &apos;luxury&apos;, label: &apos;Luxury Package&apos;, description: &apos;Full day coverage, unlimited photos&apos; }
+    { value: 'basic', label: 'Basic Package', description: '4 hours coverage, 50 edited photos' },
+    { value: 'standard', label: 'Standard Package', description: '6 hours coverage, 100 edited photos' },
+    { value: 'premium', label: 'Premium Package', description: '8 hours coverage, 200 edited photos' },
+    { value: 'luxury', label: 'Luxury Package', description: 'Full day coverage, unlimited photos' }
   ];
 
   const handleInputChange = (field: string, value: string) => {
@@ -62,31 +62,40 @@ const LuxuryBookingForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       await addBooking({
-        ...formData,
-        status: &apos;pending&apos;,
+        clientName: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        eventType: formData.service,
+        eventDate: formData.date,
+        eventTime: formData.time,
+        location: formData.location,
+        duration: formData.guests ? `${formData.guests} guests` : undefined,
+        notes: formData.message,
+        serviceId: formData.service,
+        status: 'pending',
         // createdAt will be set by database
       });
-      
+
       toast.bookingSuccess();
-      
+
       // Reset form
       setFormData({
-        name: &apos;&apos;,
-        email: &apos;&apos;,
-        phone: &apos;&apos;,
-        service: &apos;&apos;,
-        date: &apos;&apos;,
-        time: &apos;&apos;,
-        location: &apos;&apos;,
-        guests: &apos;&apos;,
-        budget: &apos;&apos;,
-        message: &apos;&apos;,
-        package: &apos;&apos;
+        name: '',
+        email: '',
+        phone: '',
+        service: '',
+        date: '',
+        time: '',
+        location: '',
+        guests: '',
+        budget: '',
+        message: '',
+        package: ''
       });
-    } catch (error) {
+    } catch {
       toast.serverError();
     }
   };
@@ -96,7 +105,7 @@ const LuxuryBookingForm: React.FC = () => {
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-96 h-96 bg-luxury-gold-500/10 rounded-full blur-3xl animate-luxury-float"></div>
-        <div className="absolute bottom-20 right-20 w-64 h-64 bg-luxury-teal-500/10 rounded-full blur-3xl animate-luxury-float" style={{ animationDelay: &apos;3s&apos; }}></div>
+        <div className="absolute bottom-20 right-20 w-64 h-64 bg-luxury-teal-500/10 rounded-full blur-3xl animate-luxury-float" style={{ animationDelay: '3s' }}></div>
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-6">
@@ -150,7 +159,7 @@ const LuxuryBookingForm: React.FC = () => {
                     <Input
                       id="name"
                       value={formData.name}
-                      onChange={(e) => handleInputChange(&apos;name&apos;, e.target.value)}
+                      onChange={(e) => handleInputChange('name', e.target.value)}
                       placeholder="Enter your full name"
                       required
                       className="bg-white/50 dark:bg-luxury-charcoal-800/50 border-luxury-charcoal-300 dark:border-luxury-charcoal-600"
@@ -165,7 +174,7 @@ const LuxuryBookingForm: React.FC = () => {
                       id="email"
                       type="email"
                       value={formData.email}
-                      onChange={(e) => handleInputChange(&apos;email&apos;, e.target.value)}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
                       placeholder="Enter your email"
                       required
                       className="bg-white/50 dark:bg-luxury-charcoal-800/50 border-luxury-charcoal-300 dark:border-luxury-charcoal-600"
@@ -179,7 +188,7 @@ const LuxuryBookingForm: React.FC = () => {
                     <Input
                       id="phone"
                       value={formData.phone}
-                      onChange={(e) => handleInputChange(&apos;phone&apos;, e.target.value)}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
                       placeholder="Enter your phone number"
                       required
                       className="bg-white/50 dark:bg-luxury-charcoal-800/50 border-luxury-charcoal-300 dark:border-luxury-charcoal-600"
@@ -190,20 +199,20 @@ const LuxuryBookingForm: React.FC = () => {
                     <Label htmlFor="service" className="text-luxury-charcoal-700 dark:text-luxury-charcoal-300">
                       Service Type *
                     </Label>
-                    <Select value={formData.service} onValueChange={(value) => handleInputChange(&apos;service&apos;, value)}>
+                    <Select value={formData.service} onValueChange={(value) => handleInputChange('service', value)}>
                       <SelectTrigger className="bg-white/50 dark:bg-luxury-charcoal-800/50 border-luxury-charcoal-300 dark:border-luxury-charcoal-600">
                         <SelectValue placeholder="Select a service" />
                       </SelectTrigger>
                       <SelectContent>
                         {activeServices.map((service) => {
-                          const IconComponent = getServiceIcon(service.category || &apos;general&apos;);
+                          const IconComponent = getServiceIcon(service.category || 'general');
                           return (
                             <SelectItem key={service.id} value={service.id}>
                               <div className="flex items-center gap-2">
                                 <IconComponent className="w-4 h-4" />
                                 <span>{service.name}</span>
                                 <span className="text-sm text-luxury-charcoal-500">
-                                  ({service.priceFrom ? `From $${service.priceFrom}` : &apos;Contact for pricing&apos;})
+                                  ({service.priceFrom ? `From $${service.priceFrom}` : 'Contact for pricing'})
                                 </span>
                               </div>
                             </SelectItem>
@@ -224,7 +233,7 @@ const LuxuryBookingForm: React.FC = () => {
                       id="date"
                       type="date"
                       value={formData.date}
-                      onChange={(e) => handleInputChange(&apos;date&apos;, e.target.value)}
+                      onChange={(e) => handleInputChange('date', e.target.value)}
                       required
                       className="bg-white/50 dark:bg-luxury-charcoal-800/50 border-luxury-charcoal-300 dark:border-luxury-charcoal-600"
                     />
@@ -238,7 +247,7 @@ const LuxuryBookingForm: React.FC = () => {
                       id="time"
                       type="time"
                       value={formData.time}
-                      onChange={(e) => handleInputChange(&apos;time&apos;, e.target.value)}
+                      onChange={(e) => handleInputChange('time', e.target.value)}
                       className="bg-white/50 dark:bg-luxury-charcoal-800/50 border-luxury-charcoal-300 dark:border-luxury-charcoal-600"
                     />
                   </div>
@@ -251,7 +260,7 @@ const LuxuryBookingForm: React.FC = () => {
                       id="guests"
                       type="number"
                       value={formData.guests}
-                      onChange={(e) => handleInputChange(&apos;guests&apos;, e.target.value)}
+                      onChange={(e) => handleInputChange('guests', e.target.value)}
                       placeholder="Estimated guests"
                       className="bg-white/50 dark:bg-luxury-charcoal-800/50 border-luxury-charcoal-300 dark:border-luxury-charcoal-600"
                     />
@@ -267,7 +276,7 @@ const LuxuryBookingForm: React.FC = () => {
                     <Input
                       id="location"
                       value={formData.location}
-                      onChange={(e) => handleInputChange(&apos;location&apos;, e.target.value)}
+                      onChange={(e) => handleInputChange('location', e.target.value)}
                       placeholder="Enter event location"
                       required
                       className="bg-white/50 dark:bg-luxury-charcoal-800/50 border-luxury-charcoal-300 dark:border-luxury-charcoal-600"
@@ -278,7 +287,7 @@ const LuxuryBookingForm: React.FC = () => {
                     <Label htmlFor="package" className="text-luxury-charcoal-700 dark:text-luxury-charcoal-300">
                       Package Preference
                     </Label>
-                    <Select value={formData.package} onValueChange={(value) => handleInputChange(&apos;package&apos;, value)}>
+                    <Select value={formData.package} onValueChange={(value) => handleInputChange('package', value)}>
                       <SelectTrigger className="bg-white/50 dark:bg-luxury-charcoal-800/50 border-luxury-charcoal-300 dark:border-luxury-charcoal-600">
                         <SelectValue placeholder="Select a package" />
                       </SelectTrigger>
@@ -302,7 +311,7 @@ const LuxuryBookingForm: React.FC = () => {
                     <Label htmlFor="budget" className="text-luxury-charcoal-700 dark:text-luxury-charcoal-300">
                       Budget Range
                     </Label>
-                    <Select value={formData.budget} onValueChange={(value) => handleInputChange(&apos;budget&apos;, value)}>
+                    <Select value={formData.budget} onValueChange={(value) => handleInputChange('budget', value)}>
                       <SelectTrigger className="bg-white/50 dark:bg-luxury-charcoal-800/50 border-luxury-charcoal-300 dark:border-luxury-charcoal-600">
                         <SelectValue placeholder="Select your budget range" />
                       </SelectTrigger>
@@ -323,7 +332,7 @@ const LuxuryBookingForm: React.FC = () => {
                     <Textarea
                       id="message"
                       value={formData.message}
-                      onChange={(e) => handleInputChange(&apos;message&apos;, e.target.value)}
+                      onChange={(e) => handleInputChange('message', e.target.value)}
                       placeholder="Tell us more about your vision, special requirements, or any questions you have..."
                       rows={4}
                       className="bg-white/50 dark:bg-luxury-charcoal-800/50 border-luxury-charcoal-300 dark:border-luxury-charcoal-600"
@@ -344,7 +353,7 @@ const LuxuryBookingForm: React.FC = () => {
                     animate
                     className="px-12 py-4"
                   >
-                    {loading ? &apos;Sending...&apos; : &apos;Book Your Session&apos;}
+                    {loading ? 'Sending...' : 'Book Your Session'}
                   </EnhancedButton>
                 </div>
               </form>
@@ -357,3 +366,4 @@ const LuxuryBookingForm: React.FC = () => {
 };
 
 export default LuxuryBookingForm;
+

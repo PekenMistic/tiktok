@@ -35,22 +35,19 @@ export const useToast = () => {
 export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  const addToast = useCallback((toast: Omit<Toast, 'id'>) => {
-    const id = Math.random().toString(36).substr(2, 9);
-    const newToast = { ...toast, id };
-    
-    setToasts(prev => [...prev, newToast]);
-
-    // Auto remove after duration
-    const duration = toast.duration || 5000;
-    setTimeout(() => {
-      removeToast(id);
-    }, duration);
-  }, []);
-
   const removeToast = useCallback((id: string) => {
     setToasts(prev => prev.filter(toast => toast.id !== id));
   }, []);
+
+  const addToast = useCallback((toast: Omit<Toast, 'id'>) => {
+    const id = Math.random().toString(36).substr(2, 9);
+    const newToast = { ...toast, id };
+    setToasts(prev => [...prev, newToast]);
+
+    if (toast.duration !== 0) {
+      setTimeout(() => removeToast(id), toast.duration || 5000);
+    }
+  }, [removeToast]);
 
   return (
     <ToastContext.Provider value={{ addToast, removeToast, toasts }}>
@@ -207,11 +204,11 @@ export const usePhotographyToast = () => {
   return {
     bookingSuccess: () => toast.success(
       'Booking Confirmed!',
-      'Your photography session has been successfully booked. We\'ll contact you soon with details.'
+      'Your photography session has been successfully booked. We&apos;ll contact you soon with details.'
     ),
     messageSuccess: () => toast.success(
       'Message Sent!',
-      'Thank you for reaching out. We\'ll get back to you within 24 hours.'
+      'Thank you for reaching out. We&apos;ll get back to you within 24 hours.'
     ),
     portfolioLiked: () => toast.photography(
       'Added to Favorites',

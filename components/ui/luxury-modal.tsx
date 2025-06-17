@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Heart, Share2, Download } from 'lucide-react';
 import { EnhancedButton } from './enhanced-button';
@@ -135,15 +135,15 @@ export const LuxuryImageModal: React.FC<ImageGalleryModalProps> = ({
 }) => {
   const currentImage = images[currentIndex];
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     const newIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1;
     onNavigate(newIndex);
-  };
+  }, [currentIndex, images.length, onNavigate]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     const newIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0;
     onNavigate(newIndex);
-  };
+  }, [currentIndex, images.length, onNavigate]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -284,7 +284,7 @@ export const LuxuryImageModal: React.FC<ImageGalleryModalProps> = ({
           {images.length > 1 && (
             <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
               <div className="flex space-x-2 bg-luxury-charcoal-900/50 backdrop-blur-sm rounded-full p-2">
-                {images.map((image) => (
+                {images.map((image, index) => (
                   <button
                     key={image.id}
                     onClick={() => onNavigate(index)}

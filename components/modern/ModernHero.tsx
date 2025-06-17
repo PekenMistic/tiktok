@@ -1,10 +1,9 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ArrowRight, Star, Awards } from "lucide-react"
+import { ArrowRight, Star, Award, Camera, Users } from "lucide-react"
 import { EnhancedButton } from "@/components/ui/enhanced-button"
 import Link from "next/link"
-import Image from "next/image"
 
 export default function ModernHero() {
   return (
@@ -104,7 +103,7 @@ export default function ModernHero() {
               { number: "500+", label: "Happy Clients", icon: Users },
               { number: "1000+", label: "Photos Captured", icon: Camera },
               { number: "5.0", label: "Average Rating", icon: Star }
-            ].map((stat) => (
+            ].map((stat, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.8 }}

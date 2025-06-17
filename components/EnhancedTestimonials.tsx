@@ -4,9 +4,23 @@ import React from "react";
 import { motion } from "framer-motion";
 import { InfiniteMovingCards } from "@/components/aceternity/InfiniteMovingCards";
 import { Star, Quote } from "lucide-react";
+import { useDatabase } from "@/lib/database-context";
 
 const EnhancedTestimonials = () => {
-  const testimonials = [
+  const { reviews } = useDatabase();
+
+  // Filter approved reviews for testimonials
+  const approvedReviews = reviews.filter(review => review.approved);
+
+  // Convert database reviews to testimonials format
+  const databaseTestimonials = approvedReviews.map(review => ({
+    quote: review.content,
+    name: review.clientName,
+    title: `${review.serviceType} Client`,
+  }));
+
+  // Fallback testimonials if no database data
+  const fallbackTestimonials = [
     {
       quote: "Madiun Photography made our wedding day absolutely magical. Every moment was captured with such artistry and emotion. The photos tell our love story perfectly!",
       name: "Sarah & Michael Johnson",
@@ -18,26 +32,13 @@ const EnhancedTestimonials = () => {
       title: "Corporate Event Manager",
     },
     {
-      quote: "The family portrait session was amazing! They made our kids feel comfortable and the results are stunning. We&apos;ll treasure these photos forever.",
+      quote: "The family portrait session was amazing! They made our kids feel comfortable and the results are stunning. We'll treasure these photos forever.",
       name: "Emily Rodriguez",
       title: "Family Portrait Client",
     },
-    {
-      quote: "Outstanding quality and service. The photographer's eye for detail and ability to capture natural expressions is remarkable. Highly recommended!",
-      name: "James Wilson",
-      title: "Portrait Session",
-    },
-    {
-      quote: "From engagement photos to the wedding day, every shot was perfect. The team's professionalism and artistic vision made our special day even more memorable.",
-      name: "Lisa & Tom Anderson",
-      title: "Wedding & Engagement",
-    },
-    {
-      quote: "Incredible work! The photos from our anniversary celebration are breathtaking. They captured the joy and love of our special milestone beautifully.",
-      name: "Maria & Carlos Santos",
-      title: "Anniversary Session",
-    },
   ];
+
+  const testimonials = databaseTestimonials.length > 0 ? databaseTestimonials : fallbackTestimonials;
 
   const clientLogos = [
     { name: "Elegant Venues", logo: "🏛️" },
@@ -73,7 +74,7 @@ const EnhancedTestimonials = () => {
             <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"> Clients Say</span>
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Don&apos;t just take our word for it. Here's what our amazing clients have to say about their experience with us.
+            Don&apos;t just take our word for it. Here&apos;s what our amazing clients have to say about their experience with us.
           </p>
         </motion.div>
 
@@ -122,7 +123,7 @@ const EnhancedTestimonials = () => {
         >
           <h3 className="text-xl font-semibold text-gray-300 mb-8">Trusted by Amazing Clients</h3>
           <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-            {clientLogos.map((client) => (
+            {clientLogos.map((client, index) => (
               <motion.div
                 key={client.name}
                 initial={{ opacity: 0, scale: 0.8 }}

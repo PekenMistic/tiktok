@@ -1,96 +1,17 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Camera, Hearts, Building, Baby, Sparkles, ArrowRight, Check, Star } from "lucide-react"
+import { Camera, ArrowRight, Check, Star } from "lucide-react"
 import { EnhancedButton } from "@/components/ui/enhanced-button"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import Image from "next/image"
 import { useDatabase } from "@/lib/database-context"
 
-const services = [
-  {
-    id: "wedding",
-    title: "Wedding Photography",
-    description: "Capture your special day with our comprehensive wedding photography packages",
-    features: ["Full day coverage", "Engagement session", "Online gallery", "Print release"],
-    price: "From $2,500",
-    duration: "8-12 hours",
-    image: "/images/wedding.svg",
-    icon: Heart,
-    color: "from-pink-500 to-rose-500",
-    bgColor: "bg-pink-50 dark:bg-pink-900/20",
-    popular: true
-  },
-  {
-    id: "portrait",
-    title: "Portrait Sessions",
-    description: "Professional portraits that showcase your personality and style",
-    features: ["Studio or location", "Wardrobe consultation", "Retouched images", "Print options"],
-    price: "From $350",
-    duration: "1-2 hours",
-    image: "/images/portrait.svg",
-    icon: Camera,
-    color: "from-blue-500 to-cyan-500",
-    bgColor: "bg-blue-50 dark:bg-blue-900/20",
-    popular: false
-  },
-  {
-    id: "family",
-    title: "Family Photography",
-    description: "Beautiful family portraits that capture your loved ones together",
-    features: ["Multiple locations", "All family members", "Lifestyle shots", "Digital gallery"],
-    price: "From $450",
-    duration: "2-3 hours",
-    image: "/placeholder.svg",
-    icon: Users,
-    color: "from-green-500 to-emerald-500",
-    bgColor: "bg-green-50 dark:bg-green-900/20",
-    popular: false
-  },
-  {
-    id: "corporate",
-    title: "Corporate Events",
-    description: "Professional event photography for your business occasions",
-    features: ["Event coverage", "Team photos", "Branding focus", "Quick delivery"],
-    price: "From $800",
-    duration: "4-8 hours",
-    image: "/images/event.svg",
-    icon: Building,
-    color: "from-purple-500 to-violet-500",
-    bgColor: "bg-purple-50 dark:bg-purple-900/20",
-    popular: false
-  },
-  {
-    id: "maternity",
-    title: "Maternity & Newborn",
-    description: "Tender moments captured during this special time in your life",
-    features: ["Maternity session", "Newborn safety", "Props included", "Family shots"],
-    price: "From $550",
-    duration: "2-4 hours",
-    image: "/placeholder.svg",
-    icon: Baby,
-    color: "from-yellow-500 to-orange-500",
-    bgColor: "bg-yellow-50 dark:bg-yellow-900/20",
-    popular: false
-  },
-  {
-    id: "special",
-    title: "Special Occasions",
-    description: "Birthdays, anniversaries, and other milestone celebrations",
-    features: ["Custom planning", "Themed shoots", "Multiple outfits", "Creative concepts"],
-    price: "From $400",
-    duration: "2-3 hours",
-    image: "/placeholder.svg",
-    icon: Sparkles,
-    color: "from-indigo-500 to-purple-500",
-    bgColor: "bg-indigo-50 dark:bg-indigo-900/20",
-    popular: false
-  }
-]
+// Hardcoded services array removed - now using database services
 
 export default function ModernServices() {
-  const { services } = useDatabase()
+  const { services, loading, error } = useDatabase()
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -151,7 +72,7 @@ export default function ModernServices() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
             {services.map((service) => {
-            const IconComponent = Camera // Default icon since service.icon doesn&apos;t exist
+            // const IconComponent = Camera // Default icon since service.icon doesn&apos;t exist
             return (
               <motion.div
                 key={service.id}
@@ -159,7 +80,7 @@ export default function ModernServices() {
                 className="group relative"
               >
                 <div className={`relative overflow-hidden rounded-3xl bg-white dark:bg-gray-800 shadow-soft hover:shadow-large transition-all duration-500 border border-gray-100 dark:border-gray-700 ${
-                  service.popular ? &apos;ring-2 ring-purple-500/20&apos; : &apos;&apos;
+                  service.popular ? 'ring-2 ring-purple-500/20' : ''
                 }`}>
                   {/* Popular Badge */}
                   {service.popular && (
@@ -197,16 +118,16 @@ export default function ModernServices() {
                       </h3>
                       <div className="text-right">
                         <div className="text-lg font-bold text-purple-600 dark:text-purple-400">
-                          {service.priceFrom ? `From $${service.priceFrom}` : &apos;Contact for pricing&apos;}
+                          {service.priceFrom ? `From $${service.priceFrom}` : 'Contact for pricing'}
                         </div>
                         <div className="text-xs text-gray-500 dark:text-gray-400">
-                          {service.duration || &apos;Varies&apos;}
+                          {service.duration || 'Varies'}
                         </div>
                       </div>
                     </div>
 
                     <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                      {service.description || &apos;Professional photography service tailored to your needs.&apos;}
+                      {service.description || 'Professional photography service tailored to your needs.'}
                     </p>
 
                     {/* Features */}

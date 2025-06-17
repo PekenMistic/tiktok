@@ -3,29 +3,11 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Calendar, Clock, User, Phone, Mail, MapPin, DollarSign, CheckCircle, XCircle, AlertCircle } from "lucide-react"
-import { useDatabase } from "@/lib/database-context"
-
-interface Booking {
-  id: string
-  clientName: string
-  email: string
-  phone?: string
-  eventType: string
-  eventDate: string
-  eventTime?: string
-  location?: string
-  duration?: string
-  price?: string | null
-  status: "pending" | "confirmed" | "cancelled" | "completed"
-  notes?: string
-  createdAt: string
-}
+import { useDatabase, type Booking } from "@/lib/database-context"
 
 export default function BookingManager() {
   const { bookings, updateBooking } = useDatabase()
@@ -324,7 +306,7 @@ export default function BookingManager() {
                 </div>
                 <div>
                   <Label>Price</Label>
-                  <p className="font-medium">${selectedBooking.price ? parseFloat(selectedBooking.price).toLocaleString() : '0'}</p>
+                  <p className="font-medium">${selectedBooking.price ? Number(selectedBooking.price).toLocaleString() : '0'}</p>
                 </div>
               </div>
               <div>

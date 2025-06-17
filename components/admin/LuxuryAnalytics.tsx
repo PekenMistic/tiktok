@@ -151,7 +151,7 @@ const LuxuryAnalytics: React.FC = () => {
               key={range.value}
               variant={timeRange === range.value ? 'luxury' : 'ghost'}
               size="sm"
-              onClick={() => setTimeRange(range.value as '7d' | '30d' | '90d' | '1y')}
+              onClick={() => setTimeRange(range.value as 'week' | 'month' | 'quarter' | 'year')}
               animate
             >
               {range.label}

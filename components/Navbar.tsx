@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { ModeToggle } from "@/components/ModeToggle"
-import { Menu, Image as ImageIcon, Heart } from "lucide-react"
+import { Menu, Camera, Heart } from "lucide-react"
 import { Button } from "./ui/button"
 
 
@@ -21,7 +21,7 @@ const Navbar = () => {
     { href: "/portfolio", label: "Portfolio" },
     { href: "/contact", label: "Contact" },
     { href: "/blog", label: "Blog" },
-    { href: "/book", label: "Book" },
+    { href: "/book", label: "Booking" },
     { href: "/reviews", label: "Reviews" },
   ]
 

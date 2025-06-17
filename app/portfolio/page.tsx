@@ -1,12 +1,12 @@
 // app/portfolio/page.tsx
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Search, Filter, Grid, List, Heart, Share2, Download, ChevronLeft, ChevronRight } from "lucide-react"
@@ -124,11 +124,7 @@ export default function PortfolioPage() {
   const [showFeaturedOnly, setShowFeaturedOnly] = useState(false)
   const [sortBy] = useState<"date" | "likes" | "title">("date")
 
-  useEffect(() => {
-    filterAndSortItems()
-  }, [selectedCategory, searchQuery, showFeaturedOnly, sortBy])
-
-  const filterAndSortItems = () => {
+  const filterAndSortItems = useCallback(() => {
     const filtered = portfolioItems.filter((item) => {
       const matchesCategory = selectedCategory === "All" || item.category === selectedCategory
       const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -154,7 +150,11 @@ export default function PortfolioPage() {
     })
 
     setFilteredItems(filtered)
-  }
+  }, [selectedCategory, searchQuery, showFeaturedOnly, sortBy])
+
+  useEffect(() => {
+    filterAndSortItems()
+  }, [filterAndSortItems])
 
   const handleImageSelect = (index: number) => {
     setSelectedImage(index)

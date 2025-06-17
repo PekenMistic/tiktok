@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
-import React, { useState } from &apos;react&apos;;
-import { motion, AnimatePresence } from &apos;framer-motion&apos;;
-import { Plus, Minus, HelpCircle, Camera, Clock, DollarSign, Users } from &apos;lucide-react&apos;;
-import { useDatabase } from &apos;@/lib/database-context&apos;;
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Plus, Minus, HelpCircle, Camera, Clock, DollarSign, Users } from 'lucide-react';
+import { useDatabase } from '@/lib/database-context';
 
 const LuxuryFAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -17,14 +17,14 @@ const LuxuryFAQ = () => {
   // Map category to icon
   const getCategoryIcon = (category: string) => {
     switch (category.toLowerCase()) {
-      case &apos;services&apos;:
+      case 'services':
         return Camera;
-      case &apos;pricing&apos;:
+      case 'pricing':
         return DollarSign;
-      case &apos;booking&apos;:
+      case 'booking':
         return Clock;
-      case &apos;process&apos;:
-      case &apos;general&apos;:
+      case 'process':
+      case 'general':
         return Users;
       default:
         return HelpCircle;
@@ -203,3 +203,4 @@ const LuxuryFAQ = () => {
 };
 
 export default LuxuryFAQ;
+

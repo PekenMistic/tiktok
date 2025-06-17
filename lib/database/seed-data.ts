@@ -1,5 +1,5 @@
 import { db } from './config';
-import { blogPosts, faqs, settings, services, portfolioItems } from './schema';
+import { blogPosts, faqs, settings, services, portfolioItems, reviews } from './schema';
 
 export async function seedDatabase() {
   try {
@@ -229,6 +229,76 @@ export async function seedDatabase() {
         featured: false,
         tags: ['corporate', 'event', 'professional', 'business']
       }
+    ]).onConflictDoNothing();
+
+    // Seed Reviews
+    console.log('⭐ Seeding reviews...');
+    await db.insert(reviews).values([
+      {
+        clientName: 'Sarah & Michael Johnson',
+        email: 'sarah@email.com',
+        rating: 5,
+        title: 'Amazing Wedding Photography!',
+        content: 'Absolutely stunning work! Our wedding photos exceeded all expectations. The team captured every precious moment with such artistry and professionalism.',
+        serviceType: 'Wedding',
+        location: 'Bali, Indonesia',
+        imageUrl: '/images/testimonials/sarah-michael.jpg',
+        featured: true,
+        approved: true,
+        createdAt: new Date('2024-01-15'),
+      },
+      {
+        clientName: 'Emily Chen',
+        email: 'emily@email.com',
+        rating: 5,
+        title: 'Perfect Portrait Session',
+        content: 'The portrait session was amazing! I felt so comfortable and the results were beyond beautiful. Highly recommend for anyone looking for professional photos.',
+        serviceType: 'Portrait',
+        location: 'Jakarta, Indonesia',
+        imageUrl: '/images/testimonials/emily-chen.jpg',
+        featured: false,
+        approved: true,
+        createdAt: new Date('2024-01-20'),
+      },
+      {
+        clientName: 'David & Lisa Rodriguez',
+        email: 'david@email.com',
+        rating: 5,
+        title: 'Beautiful Family Photos',
+        content: 'Our family photoshoot was incredible! The photographer was so patient with our kids and captured the most beautiful moments. We love every single photo.',
+        serviceType: 'Family',
+        location: 'Surabaya, Indonesia',
+        imageUrl: '/images/testimonials/rodriguez-family.jpg',
+        featured: true,
+        approved: true,
+        createdAt: new Date('2024-02-01'),
+      },
+      {
+        clientName: 'Amanda Thompson',
+        email: 'amanda@email.com',
+        rating: 5,
+        title: 'Magical Maternity Session',
+        content: 'The maternity photos are absolutely gorgeous! Such a special experience and the results are breathtaking. Thank you for capturing this precious time.',
+        serviceType: 'Maternity',
+        location: 'Yogyakarta, Indonesia',
+        imageUrl: '/images/testimonials/amanda-maternity.jpg',
+        featured: false,
+        approved: true,
+        createdAt: new Date('2024-02-10'),
+      },
+      {
+        clientName: 'Corporate Events Inc.',
+        email: 'events@corporate.com',
+        rating: 5,
+        title: 'Professional Event Coverage',
+        content: 'Outstanding professional service for our corporate event. The team was unobtrusive yet captured every important moment perfectly. Highly professional.',
+        serviceType: 'Corporate',
+        location: 'Jakarta, Indonesia',
+        imageUrl: '/images/testimonials/corporate-event.jpg',
+        featured: false,
+        approved: true,
+        createdAt: new Date('2024-02-15'),
+      },
     ]).onConflictDoNothing();
 
     console.log('✅ Database seeding completed successfully!');

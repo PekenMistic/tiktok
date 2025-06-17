@@ -43,6 +43,9 @@ const config: Config = {
       backdropBlur: {
         xs: '2px',
       },
+      backdropFilter: {
+        'luxury': 'blur(16px) saturate(180%)',
+      },
       boxShadow: {
         'soft': '0 2px 15px -3px rgba(28, 25, 23, 0.07), 0 10px 20px -2px rgba(28, 25, 23, 0.04)',
         'medium': '0 4px 25px -5px rgba(28, 25, 23, 0.1), 0 10px 10px -5px rgba(28, 25, 23, 0.04)',
@@ -183,6 +186,10 @@ const config: Config = {
   				"0%": { transform: "rotate(0deg)" },
   				"100%": { transform: "rotate(360deg)" },
   			},
+  			"luxury-float": {
+  				"0%, 100%": { transform: "translateY(0px)" },
+  				"50%": { transform: "translateY(-20px)" },
+  			},
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
@@ -191,9 +198,13 @@ const config: Config = {
   			"meteor-effect": "meteor-effect 1s linear infinite",
   			gradient: "gradient 6s ease infinite",
   			"spin-slow": "spin-slow 20s linear infinite",
+  			"luxury-float": "luxury-float 6s ease-in-out infinite",
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require("tailwindcss-animate")
+  ],
 };
 export default config;

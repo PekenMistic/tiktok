@@ -1,19 +1,19 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Save, Settings, Globe, Phone, Palette } from "lucide-react"
+import { Save, Settings, Globe, Phone, Palette, Camera } from "lucide-react"
 import { useDatabase } from "@/lib/database-context"
 import { toast } from "sonner"
 
 export default function SettingsManager() {
-  const { settings, updateSetting } = useDatabase()
+  const { settings, updateSetting, loading, error } = useDatabase()
 
   const [formData, setFormData] = useState<Record<string, unknown>>({})
   const [saving, setSaving] = useState(false)
@@ -158,7 +158,7 @@ export default function SettingsManager() {
                   <Label htmlFor="site_title">Site Title</Label>
                   <Input
                     id="site_title"
-                    value={formData.site_title || defaultSettings.site_title}
+                    value={String(formData.site_title || defaultSettings.site_title)}
                     onChange={(e) => handleInputChange('site_title', e.target.value)}
                     placeholder="Your site title"
                   />
@@ -167,7 +167,7 @@ export default function SettingsManager() {
                   <Label htmlFor="business_name">Business Name</Label>
                   <Input
                     id="business_name"
-                    value={formData.business_name || defaultSettings.business_name}
+                    value={String(formData.business_name || defaultSettings.business_name)}
                     onChange={(e) => handleInputChange('business_name', e.target.value)}
                     placeholder="Your business name"
                   />
@@ -178,7 +178,7 @@ export default function SettingsManager() {
                 <Label htmlFor="site_description">Site Description</Label>
                 <Textarea
                   id="site_description"
-                  value={formData.site_description || defaultSettings.site_description}
+                  value={String(formData.site_description || defaultSettings.site_description)}
                   onChange={(e) => handleInputChange('site_description', e.target.value)}
                   placeholder="Brief description of your website"
                   rows={3}
@@ -189,7 +189,7 @@ export default function SettingsManager() {
                 <Label htmlFor="business_tagline">Business Tagline</Label>
                 <Input
                   id="business_tagline"
-                  value={formData.business_tagline || defaultSettings.business_tagline}
+                  value={String(formData.business_tagline || defaultSettings.business_tagline)}
                   onChange={(e) => handleInputChange('business_tagline', e.target.value)}
                   placeholder="Your business tagline"
                 />
@@ -199,7 +199,7 @@ export default function SettingsManager() {
                 <Label htmlFor="business_about">About Business</Label>
                 <Textarea
                   id="business_about"
-                  value={formData.business_about || defaultSettings.business_about}
+                  value={String(formData.business_about || defaultSettings.business_about)}
                   onChange={(e) => handleInputChange('business_about', e.target.value)}
                   placeholder="Tell visitors about your business"
                   rows={4}
@@ -237,7 +237,7 @@ export default function SettingsManager() {
                   <Input
                     id="contact_email"
                     type="email"
-                    value={formData.contact_email || defaultSettings.contact_email}
+                    value={String(formData.contact_email || defaultSettings.contact_email)}
                     onChange={(e) => handleInputChange('contact_email', e.target.value)}
                     placeholder="your@email.com"
                   />
@@ -246,7 +246,7 @@ export default function SettingsManager() {
                   <Label htmlFor="contact_phone">Phone Number</Label>
                   <Input
                     id="contact_phone"
-                    value={formData.contact_phone || defaultSettings.contact_phone}
+                    value={String(formData.contact_phone || defaultSettings.contact_phone)}
                     onChange={(e) => handleInputChange('contact_phone', e.target.value)}
                     placeholder="+1 (555) 123-4567"
                   />
@@ -257,7 +257,7 @@ export default function SettingsManager() {
                 <Label htmlFor="contact_address">Business Address</Label>
                 <Textarea
                   id="contact_address"
-                  value={formData.contact_address || defaultSettings.contact_address}
+                  value={String(formData.contact_address || defaultSettings.contact_address)}
                   onChange={(e) => handleInputChange('contact_address', e.target.value)}
                   placeholder="Your business address"
                   rows={2}
@@ -268,7 +268,7 @@ export default function SettingsManager() {
                 <Label htmlFor="contact_hours">Business Hours</Label>
                 <Input
                   id="contact_hours"
-                  value={formData.contact_hours || defaultSettings.contact_hours}
+                  value={String(formData.contact_hours || defaultSettings.contact_hours)}
                   onChange={(e) => handleInputChange('contact_hours', e.target.value)}
                   placeholder="Mon-Fri: 9AM-6PM"
                 />
@@ -303,7 +303,7 @@ export default function SettingsManager() {
                   <Label htmlFor="social_instagram">Instagram</Label>
                   <Input
                     id="social_instagram"
-                    value={formData.social_instagram || defaultSettings.social_instagram}
+                    value={String(formData.social_instagram || defaultSettings.social_instagram)}
                     onChange={(e) => handleInputChange('social_instagram', e.target.value)}
                     placeholder="https://instagram.com/yourhandle"
                   />
@@ -312,7 +312,7 @@ export default function SettingsManager() {
                   <Label htmlFor="social_facebook">Facebook</Label>
                   <Input
                     id="social_facebook"
-                    value={formData.social_facebook || defaultSettings.social_facebook}
+                    value={String(formData.social_facebook || defaultSettings.social_facebook)}
                     onChange={(e) => handleInputChange('social_facebook', e.target.value)}
                     placeholder="https://facebook.com/yourpage"
                   />
@@ -321,7 +321,7 @@ export default function SettingsManager() {
                   <Label htmlFor="social_twitter">Twitter</Label>
                   <Input
                     id="social_twitter"
-                    value={formData.social_twitter || defaultSettings.social_twitter}
+                    value={String(formData.social_twitter || defaultSettings.social_twitter)}
                     onChange={(e) => handleInputChange('social_twitter', e.target.value)}
                     placeholder="https://twitter.com/yourhandle"
                   />
@@ -330,7 +330,7 @@ export default function SettingsManager() {
                   <Label htmlFor="social_youtube">YouTube</Label>
                   <Input
                     id="social_youtube"
-                    value={formData.social_youtube || defaultSettings.social_youtube}
+                    value={String(formData.social_youtube || defaultSettings.social_youtube)}
                     onChange={(e) => handleInputChange('social_youtube', e.target.value)}
                     placeholder="https://youtube.com/yourchannel"
                   />
@@ -364,7 +364,7 @@ export default function SettingsManager() {
               <div className="flex items-center space-x-2">
                 <Switch
                   id="booking_enabled"
-                  checked={formData.booking_enabled ?? defaultSettings.booking_enabled}
+                  checked={Boolean(formData.booking_enabled ?? defaultSettings.booking_enabled)}
                   onCheckedChange={(checked) => handleInputChange('booking_enabled', checked)}
                 />
                 <Label htmlFor="booking_enabled">Enable Online Booking</Label>
@@ -376,7 +376,7 @@ export default function SettingsManager() {
                   <Input
                     id="booking_advance_days"
                     type="number"
-                    value={formData.booking_advance_days || defaultSettings.booking_advance_days}
+                    value={String(formData.booking_advance_days || defaultSettings.booking_advance_days)}
                     onChange={(e) => handleInputChange('booking_advance_days', parseInt(e.target.value))}
                     placeholder="30"
                   />
@@ -386,7 +386,7 @@ export default function SettingsManager() {
                   <Input
                     id="booking_deposit_percentage"
                     type="number"
-                    value={formData.booking_deposit_percentage || defaultSettings.booking_deposit_percentage}
+                    value={String(formData.booking_deposit_percentage || defaultSettings.booking_deposit_percentage)}
                     onChange={(e) => handleInputChange('booking_deposit_percentage', parseInt(e.target.value))}
                     placeholder="25"
                   />
@@ -422,7 +422,7 @@ export default function SettingsManager() {
                   <Input
                     id="theme_primary_color"
                     type="color"
-                    value={formData.theme_primary_color || defaultSettings.theme_primary_color}
+                    value={String(formData.theme_primary_color || defaultSettings.theme_primary_color)}
                     onChange={(e) => handleInputChange('theme_primary_color', e.target.value)}
                   />
                 </div>
@@ -431,7 +431,7 @@ export default function SettingsManager() {
                   <Input
                     id="theme_secondary_color"
                     type="color"
-                    value={formData.theme_secondary_color || defaultSettings.theme_secondary_color}
+                    value={String(formData.theme_secondary_color || defaultSettings.theme_secondary_color)}
                     onChange={(e) => handleInputChange('theme_secondary_color', e.target.value)}
                   />
                 </div>
@@ -440,7 +440,7 @@ export default function SettingsManager() {
                   <Input
                     id="theme_accent_color"
                     type="color"
-                    value={formData.theme_accent_color || defaultSettings.theme_accent_color}
+                    value={String(formData.theme_accent_color || defaultSettings.theme_accent_color)}
                     onChange={(e) => handleInputChange('theme_accent_color', e.target.value)}
                   />
                 </div>
@@ -449,7 +449,7 @@ export default function SettingsManager() {
               <div className="flex items-center space-x-2">
                 <Switch
                   id="theme_dark_mode"
-                  checked={formData.theme_dark_mode ?? defaultSettings.theme_dark_mode}
+                  checked={Boolean(formData.theme_dark_mode ?? defaultSettings.theme_dark_mode)}
                   onCheckedChange={(checked) => handleInputChange('theme_dark_mode', checked)}
                 />
                 <Label htmlFor="theme_dark_mode">Enable Dark Mode by Default</Label>
@@ -474,4 +474,5 @@ export default function SettingsManager() {
     </div>
   )
 }
+
 

@@ -3,7 +3,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import { designSystem, getSectionClass, getContainerClass } from '@/lib/design-system';
+import { cn } from "@/lib/utils"
+import { getSectionClass, getContainerClass } from '@/lib/design-system';
 
 interface SectionProps {
   children: React.ReactNode;

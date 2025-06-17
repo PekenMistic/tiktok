@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from &apos;react&apos;;
-import { motion, AnimatePresence } from &apos;framer-motion&apos;;
-import { Star, Quote, ChevronLeft, ChevronRight, Play, Heart, Camera } from &apos;lucide-react&apos;;
-import { Button } from &apos;@/components/ui/button&apos;;
-import { Badge } from &apos;@/components/ui/badge&apos;;
-import Image from &apos;next/image&apos;;
-import { useDatabase } from &apos;@/lib/database-context&apos;;
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Star, Quote, ChevronLeft, ChevronRight, Play, Heart, Camera } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import Image from 'next/image';
+import { useDatabase } from '@/lib/database-context';
 
 const LuxuryTestimonials = () => {
   const { reviews, loading, error } = useDatabase();
@@ -71,8 +71,8 @@ const LuxuryTestimonials = () => {
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-luxury-gold-400/10 to-luxury-teal-400/10 rounded-full blur-3xl animate-luxury-float"></div>
-        <div className="absolute bottom-20 right-10 w-32 h-32 bg-gradient-to-br from-luxury-teal-400/10 to-luxury-gold-400/10 rounded-full blur-3xl animate-luxury-float" style={{ animationDelay: &apos;3s&apos; }}></div>
-        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-gradient-to-br from-luxury-gold-400/5 to-luxury-teal-400/5 rounded-full blur-2xl animate-luxury-float" style={{ animationDelay: &apos;6s&apos; }}></div>
+        <div className="absolute bottom-20 right-10 w-32 h-32 bg-gradient-to-br from-luxury-teal-400/10 to-luxury-gold-400/10 rounded-full blur-3xl animate-luxury-float" style={{ animationDelay: '3s' }}></div>
+        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-gradient-to-br from-luxury-gold-400/5 to-luxury-teal-400/5 rounded-full blur-2xl animate-luxury-float" style={{ animationDelay: '6s' }}></div>
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
@@ -155,7 +155,7 @@ const LuxuryTestimonials = () => {
                     {/* Testimonial Content */}
                     <div className="space-y-6">
                       <h3 className="text-2xl md:text-3xl font-display font-bold text-white leading-tight">
-                        "{currentTestimonial.title || &apos;Amazing Experience&apos;}"
+                        "                                                {currentTestimonial.title || 'Amazing Experience'}"
                       </h3>
                       
                       <p className="text-lg text-luxury-charcoal-200 leading-relaxed">
@@ -194,10 +194,10 @@ const LuxuryTestimonials = () => {
                           {currentTestimonial.clientName}
                         </h4>
                         <p className="text-luxury-gold-300 text-sm">
-                          {currentTestimonial.serviceType || &apos;Client&apos;}
+                          {currentTestimonial.serviceType || 'Client'}
                         </p>
                         <p className="text-luxury-charcoal-400 text-xs">
-                          {currentTestimonial.location || &apos;Location not specified&apos;}
+                          {currentTestimonial.location || 'Location not specified'}
                         </p>
                       </div>
                     </div>
@@ -205,7 +205,7 @@ const LuxuryTestimonials = () => {
                     {/* Category Badge */}
                     <Badge className="bg-gradient-to-r from-luxury-gold-500/20 to-luxury-teal-500/20 text-luxury-gold-300 border-luxury-gold-400/30">
                       <Camera className="w-3 h-3 mr-1" />
-                      {currentTestimonial.serviceType || &apos;Photography&apos;} Photography
+                      {currentTestimonial.serviceType || 'Photography'} Photography
                     </Badge>
                   </div>
 

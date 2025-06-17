@@ -61,7 +61,7 @@ export default function ModernPortfolio() {
             <span className="gradient-text-luxury">Masterpieces</span>
           </h2>
           <p className="text-xl text-luxury-charcoal-600 dark:text-luxury-charcoal-300 max-w-3xl mx-auto leading-relaxed">
-            Discover our collection of stunning photography that captures life's most precious moments with artistic excellence and emotional depth.
+            Discover our collection of stunning photography that captures life&apos;s most precious moments with artistic excellence and emotional depth.
           </p>
         </motion.div>
 
@@ -152,7 +152,7 @@ export default function ModernPortfolio() {
             }
           >
             <AnimatePresence>
-              {filteredItems.map((item) => (
+              {filteredItems.map((item, index) => (
                 <motion.div
                   key={item.id}
                   variants={itemVariants}

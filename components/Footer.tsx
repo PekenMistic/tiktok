@@ -3,7 +3,7 @@ import * as React from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Instagram, Facebook, Twitter, Phone, MapPin, Heart } from "lucide-react"
+import { Instagram, Facebook, Twitter, Phone, MapPin, Heart, Camera, Mail } from "lucide-react"
 
 const Footer = () => {
   return (
@@ -27,7 +27,7 @@ const Footer = () => {
               <span className="font-display font-bold text-xl gradient-text-luxury">Madiun Photography</span>
             </div>
             <p className="text-luxury-charcoal-300 leading-relaxed">
-              Capturing life's most precious moments with artistic vision and professional excellence.
+              Capturing life&apos;s most precious moments with artistic vision and professional excellence.
               Creating timeless memories that last forever.
             </p>
             <div className="flex space-x-3">

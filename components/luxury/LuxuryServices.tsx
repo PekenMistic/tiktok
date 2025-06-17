@@ -1,12 +1,12 @@
-"use client";
+﻿"use client";
 
-import React from &apos;react&apos;;
-import { motion } from &apos;framer-motion&apos;;
-import { Camera, Heart, Users, Building, Star, ArrowRight, Check } from &apos;lucide-react&apos;;
-import { EnhancedButton } from &apos;@/components/ui/enhanced-button&apos;;
-import { useDatabase } from &apos;@/lib/database-context&apos;;
-import Link from &apos;next/link&apos;;
-import Image from &apos;next/image&apos;;
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Camera, Heart, Users, Building, Star, ArrowRight, Check } from 'lucide-react';
+import { EnhancedButton } from '@/components/ui/enhanced-button';
+import { useDatabase } from '@/lib/database-context';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const LuxuryServices = () => {
   const { services, loading, error } = useDatabase();
@@ -122,7 +122,7 @@ const LuxuryServices = () => {
             viewport={{ once: true }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-            {services.map((service, index) => {
+            {services.map((service) => {
               const IconComponent = serviceIcons[service.category as keyof typeof serviceIcons] || Camera;
               
               return (
@@ -167,16 +167,16 @@ const LuxuryServices = () => {
                         </h3>
                         <div className="text-right">
                           <div className="text-lg font-bold text-luxury-gold-600 dark:text-luxury-gold-400">
-                            {service.priceFrom ? `From $${service.priceFrom}` : &apos;Contact for pricing&apos;}
+                            {service.priceFrom ? `From $${service.priceFrom}` : 'Contact for pricing'}
                           </div>
                           <div className="text-sm text-luxury-charcoal-500 dark:text-luxury-charcoal-400">
-                            {service.duration || &apos;Varies&apos;}
+                            {service.duration || 'Varies'}
                           </div>
                         </div>
                       </div>
 
                       <p className="text-luxury-charcoal-600 dark:text-luxury-charcoal-300 mb-6 leading-relaxed">
-                        {service.description || &apos;Professional photography service tailored to your needs.&apos;}
+                        {service.description || 'Professional photography service tailored to your needs.'}
                       </p>
 
                       {/* Features */}
@@ -259,3 +259,4 @@ const LuxuryServices = () => {
 };
 
 export default LuxuryServices;
+

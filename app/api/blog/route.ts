@@ -11,25 +11,54 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get('category');
     const featured = searchParams.get('featured');
 
-    let query = db.select().from(blogPosts);
+    // Build query with filters
+    let posts;
 
-    // Apply filters
-    const conditions = [];
-    if (published === 'true') {
-      conditions.push(eq(blogPosts.published, true));
+    if (published === 'true' && category && featured === 'true') {
+      posts = await db.select().from(blogPosts)
+        .where(and(
+          eq(blogPosts.published, true),
+          eq(blogPosts.category, category),
+          eq(blogPosts.featured, true)
+        ))
+        .orderBy(desc(blogPosts.createdAt));
+    } else if (published === 'true' && category) {
+      posts = await db.select().from(blogPosts)
+        .where(and(
+          eq(blogPosts.published, true),
+          eq(blogPosts.category, category)
+        ))
+        .orderBy(desc(blogPosts.createdAt));
+    } else if (published === 'true' && featured === 'true') {
+      posts = await db.select().from(blogPosts)
+        .where(and(
+          eq(blogPosts.published, true),
+          eq(blogPosts.featured, true)
+        ))
+        .orderBy(desc(blogPosts.createdAt));
+    } else if (category && featured === 'true') {
+      posts = await db.select().from(blogPosts)
+        .where(and(
+          eq(blogPosts.category, category),
+          eq(blogPosts.featured, true)
+        ))
+        .orderBy(desc(blogPosts.createdAt));
+    } else if (published === 'true') {
+      posts = await db.select().from(blogPosts)
+        .where(eq(blogPosts.published, true))
+        .orderBy(desc(blogPosts.createdAt));
+    } else if (category) {
+      posts = await db.select().from(blogPosts)
+        .where(eq(blogPosts.category, category))
+        .orderBy(desc(blogPosts.createdAt));
+    } else if (featured === 'true') {
+      posts = await db.select().from(blogPosts)
+        .where(eq(blogPosts.featured, true))
+        .orderBy(desc(blogPosts.createdAt));
+    } else {
+      posts = await db.select().from(blogPosts)
+        .orderBy(desc(blogPosts.createdAt));
     }
-    if (category) {
-      conditions.push(eq(blogPosts.category, category));
-    }
-    if (featured === 'true') {
-      conditions.push(eq(blogPosts.featured, true));
-    }
-
-    if (conditions.length > 0) {
-      query = query.where(and(...conditions));
-    }
-
-    const posts = await query.orderBy(desc(blogPosts.createdAt));
 
     return NextResponse.json({
       success: true,

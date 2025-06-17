@@ -9,12 +9,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Edit, Trash2, Plus, HelpCircle, ArrowUp, ArrowDown } from "lucide-react"
 import { useDatabase } from "@/lib/database-context"
 
 export default function FAQManager() {
-  const { faqs, addFAQ, updateFAQ, deleteFAQ } = useDatabase()
+  const { faqs, addFAQ, updateFAQ, deleteFAQ, loading, error } = useDatabase()
 
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [editingFaq, setEditingFaq] = useState<{id: string; question: string; answer: string; category: string; order: number; active: boolean} | null>(null)

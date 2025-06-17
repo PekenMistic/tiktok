@@ -8,68 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import { useDatabase } from "@/lib/database-context"
 
-const testimonials = [
-  {
-    id: 1,
-    name: "Sarah & Michael Johnson",
-    role: "Wedding Couple",
-    content: "Absolutely stunning work! Our wedding photos exceeded all expectations. The team captured every precious moment with such artistry and professionalism.",
-    rating: 5,
-    image: "/placeholder.svg",
-    category: "Wedding",
-    location: "Bali, Indonesia",
-    hasVideo: true,
-    featured: true
-  },
-  {
-    id: 2,
-    name: "Emily Chen",
-    role: "Portrait Client",
-    content: "The portrait session was amazing! I felt so comfortable and the results were beyond beautiful. Highly recommend for anyone looking for professional photos.",
-    rating: 5,
-    image: "/placeholder.svg",
-    category: "Portrait",
-    location: "Jakarta, Indonesia",
-    hasVideo: false,
-    featured: false
-  },
-  {
-    id: 3,
-    name: "David & Lisa Thompson",
-    role: "Family Session",
-    content: "Our family photos turned out perfect! The photographer was great with our kids and captured such natural, joyful moments. We&apos;ll treasure these forever.",
-    rating: 5,
-    image: "/placeholder.svg",
-    category: "Family",
-    location: "Surabaya, Indonesia",
-    hasVideo: true,
-    featured: false
-  },
-  {
-    id: 4,
-    name: "Tech Innovate Corp",
-    role: "Corporate Client",
-    content: "Professional, efficient, and creative. The corporate event photos perfectly captured our company culture and the energy of our team. Excellent service!",
-    rating: 5,
-    image: "/placeholder.svg",
-    category: "Corporate",
-    location: "Yogyakarta, Indonesia",
-    hasVideo: false,
-    featured: false
-  },
-  {
-    id: 5,
-    name: "Amanda Rodriguez",
-    role: "Maternity Client",
-    content: "The maternity shoot was such a beautiful experience. The photographer made me feel gorgeous and confident. The photos are absolutely magical!",
-    rating: 5,
-    image: "/placeholder.svg",
-    category: "Maternity",
-    location: "Bandung, Indonesia",
-    hasVideo: true,
-    featured: true
-  }
-]
+// Hardcoded testimonials array removed - now using database reviews
 
 export default function ModernTestimonials() {
   const { reviews, loading, error } = useDatabase()
@@ -175,7 +114,7 @@ export default function ModernTestimonials() {
                   <div className="relative">
                     <Quote className="absolute -top-4 -left-4 w-12 h-12 text-purple-400/30" />
                     <blockquote className="text-2xl md:text-3xl font-light leading-relaxed text-gray-100 relative z-10">
-                      "{currentTestimonial.content}"
+                      "                                            {currentTestimonial.content}"
                     </blockquote>
                   </div>
 
@@ -210,10 +149,10 @@ export default function ModernTestimonials() {
                         {currentTestimonial.clientName}
                       </h4>
                       <p className="text-purple-300 text-sm">
-                        {currentTestimonial.serviceType || &apos;Client&apos;}
+                        {currentTestimonial.serviceType || 'Client'}
                       </p>
                       <p className="text-gray-400 text-xs">
-                        {currentTestimonial.location || &apos;Location not specified&apos;}
+                        {currentTestimonial.location || 'Location not specified'}
                       </p>
                     </div>
                   </div>
@@ -221,7 +160,7 @@ export default function ModernTestimonials() {
                   {/* Category Badge */}
                   <Badge className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 text-purple-200 border-purple-400/30">
                     <Camera className="w-3 h-3 mr-1" />
-                    {currentTestimonial.serviceType || &apos;Photography&apos;} Photography
+                    {currentTestimonial.serviceType || 'Photography'} Photography
                   </Badge>
                 </div>
 
