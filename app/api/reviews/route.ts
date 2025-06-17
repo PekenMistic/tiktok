@@ -14,8 +14,9 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '50');
     const offset = parseInt(searchParams.get('offset') || '0');
 
-    let query = db.select().from(reviews);
-    const conditions = [];
+    // Build base query
+    let baseQuery = db.select().from(reviews);
+    const conditions: any[] = [];
 
     if (approved === 'true') {
       conditions.push(eq(reviews.approved, true));
@@ -35,13 +36,15 @@ export async function GET(request: NextRequest) {
       conditions.push(gte(reviews.rating, parseInt(minRating)));
     }
 
+    // Apply where conditions if any exist
+    let finalQuery = baseQuery;
     if (conditions.length === 1) {
-      query = query.where(conditions[0]);
+      finalQuery = baseQuery.where(conditions[0]);
     } else if (conditions.length > 1) {
-      query = query.where(and(...conditions));
+      finalQuery = baseQuery.where(and(...conditions));
     }
 
-    const reviewList = await query
+    const reviewList = await finalQuery
       .orderBy(desc(reviews.createdAt))
       .limit(limit)
       .offset(offset);

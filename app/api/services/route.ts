@@ -13,8 +13,9 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '50');
     const offset = parseInt(searchParams.get('offset') || '0');
 
-    let query = db.select().from(services);
-    const conditions = [];
+    // Build base query
+    let baseQuery = db.select().from(services);
+    const conditions: any[] = [];
 
     if (active === 'true') {
       conditions.push(eq(services.active, true));
@@ -28,13 +29,15 @@ export async function GET(request: NextRequest) {
       conditions.push(eq(services.category, category));
     }
 
+    // Apply where conditions if any exist
+    let finalQuery = baseQuery;
     if (conditions.length === 1) {
-      query = query.where(conditions[0]);
+      finalQuery = baseQuery.where(conditions[0]);
     } else if (conditions.length > 1) {
-      query = query.where(and(...conditions));
+      finalQuery = baseQuery.where(and(...conditions));
     }
 
-    const serviceList = await query
+    const serviceList = await finalQuery
       .orderBy(desc(services.createdAt))
       .limit(limit)
       .offset(offset);

@@ -13,8 +13,9 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '50');
     const offset = parseInt(searchParams.get('offset') || '0');
 
-    let query = db.select().from(portfolioItems);
-    const conditions = [];
+    // Build base query
+    let baseQuery = db.select().from(portfolioItems);
+    const conditions: any[] = [];
 
     if (category && category !== 'All') {
       conditions.push(eq(portfolioItems.category, category));
@@ -30,13 +31,15 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Apply where conditions if any exist
+    let finalQuery = baseQuery;
     if (conditions.length === 1) {
-      query = query.where(conditions[0]);
+      finalQuery = baseQuery.where(conditions[0]);
     } else if (conditions.length > 1) {
-      query = query.where(and(...conditions));
+      finalQuery = baseQuery.where(and(...conditions));
     }
 
-    const items = await query
+    const items = await finalQuery
       .orderBy(desc(portfolioItems.createdAt))
       .limit(limit)
       .offset(offset);

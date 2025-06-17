@@ -10,10 +10,11 @@ export async function GET(request: NextRequest) {
     const active = searchParams.get('active');
     const category = searchParams.get('category');
 
-    let query = db.select().from(faqs);
+    // Build base query
+    let baseQuery = db.select().from(faqs);
 
     // Apply filters
-    const conditions = [];
+    const conditions: any[] = [];
     if (active === 'true') {
       conditions.push(eq(faqs.active, true));
     }
@@ -21,13 +22,15 @@ export async function GET(request: NextRequest) {
       conditions.push(eq(faqs.category, category));
     }
 
+    // Apply where conditions if any exist
+    let finalQuery = baseQuery;
     if (conditions.length === 1) {
-      query = query.where(conditions[0]);
+      finalQuery = baseQuery.where(conditions[0]);
     } else if (conditions.length > 1) {
-      query = query.where(and(...conditions));
+      finalQuery = baseQuery.where(and(...conditions));
     }
 
-    const faqList = await query.orderBy(asc(faqs.order));
+    const faqList = await finalQuery.orderBy(asc(faqs.order));
 
     return NextResponse.json({
       success: true,

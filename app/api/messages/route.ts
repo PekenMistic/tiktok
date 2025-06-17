@@ -13,8 +13,9 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '50');
     const offset = parseInt(searchParams.get('offset') || '0');
 
-    let query = db.select().from(messages);
-    const conditions = [];
+    // Build base query
+    let baseQuery = db.select().from(messages);
+    const conditions: any[] = [];
 
     if (status && status !== 'all') {
       conditions.push(eq(messages.status, status));
@@ -30,13 +31,15 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Apply where conditions if any exist
+    let finalQuery = baseQuery;
     if (conditions.length === 1) {
-      query = query.where(conditions[0]);
+      finalQuery = baseQuery.where(conditions[0]);
     } else if (conditions.length > 1) {
-      query = query.where(and(...conditions));
+      finalQuery = baseQuery.where(and(...conditions));
     }
 
-    const messageList = await query
+    const messageList = await finalQuery
       .orderBy(desc(messages.createdAt))
       .limit(limit)
       .offset(offset);

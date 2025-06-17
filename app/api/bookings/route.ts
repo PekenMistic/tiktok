@@ -13,7 +13,8 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '50');
     const offset = parseInt(searchParams.get('offset') || '0');
 
-    let query = db.select({
+    // Build base query
+    let baseQuery = db.select({
       id: bookings.id,
       clientName: bookings.clientName,
       email: bookings.email,
@@ -37,7 +38,8 @@ export async function GET(request: NextRequest) {
     .from(bookings)
     .leftJoin(services, eq(bookings.serviceId, services.id));
 
-    const conditions = [];
+    // Build conditions array
+    const conditions: any[] = [];
 
     if (status && status !== 'all') {
       conditions.push(eq(bookings.status, status));
@@ -51,13 +53,15 @@ export async function GET(request: NextRequest) {
       conditions.push(lte(bookings.eventDate, endDate));
     }
 
+    // Apply where conditions if any exist
+    let finalQuery = baseQuery;
     if (conditions.length === 1) {
-      query = query.where(conditions[0]);
+      finalQuery = baseQuery.where(conditions[0]);
     } else if (conditions.length > 1) {
-      query = query.where(and(...conditions));
+      finalQuery = baseQuery.where(and(...conditions));
     }
 
-    const bookingList = await query
+    const bookingList = await finalQuery
       .orderBy(desc(bookings.createdAt))
       .limit(limit)
       .offset(offset);
