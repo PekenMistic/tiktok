@@ -155,7 +155,8 @@ const LuxuryTestimonials = () => {
                     {/* Testimonial Content */}
                     <div className="space-y-6">
                       <h3 className="text-2xl md:text-3xl font-display font-bold text-white leading-tight">
-                        "                                                {currentTestimonial.title || 'Amazing Experience'}"
+                        "                                                                                                {/* eslint-disable-next-line react/no-unescaped-entities */}
+                        "{currentTestimonial.title || 'Amazing Experience'}""
                       </h3>
                       
                       <p className="text-lg text-luxury-charcoal-200 leading-relaxed">

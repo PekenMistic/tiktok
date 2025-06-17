@@ -114,7 +114,8 @@ export default function ModernTestimonials() {
                   <div className="relative">
                     <Quote className="absolute -top-4 -left-4 w-12 h-12 text-purple-400/30" />
                     <blockquote className="text-2xl md:text-3xl font-light leading-relaxed text-gray-100 relative z-10">
-                      "                                            {currentTestimonial.content}"
+                      "                                                                                        {/* eslint-disable-next-line react/no-unescaped-entities */}
+                      "{currentTestimonial.content}""
                     </blockquote>
                   </div>
 
