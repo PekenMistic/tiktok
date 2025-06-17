@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database/config';
 import { portfolioItems } from '@/lib/database/schema';
-import { desc, eq, and, ilike } from 'drizzle-orm';
+import { desc, eq, and, ilike, SQL } from 'drizzle-orm';
 
 // GET - Fetch all portfolio items
 export async function GET(request: NextRequest) {
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const baseQuery = db.select().from(portfolioItems);
 
     // Build where conditions
-    const whereConditions: any[] = [];
+    const whereConditions: SQL[] = [];
     if (category && category !== 'All') {
       whereConditions.push(eq(portfolioItems.category, category));
     }

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database/config';
 import { services } from '@/lib/database/schema';
-import { desc, eq, and } from 'drizzle-orm';
+import { desc, eq, and, SQL } from 'drizzle-orm';
 
 // GET - Fetch all services
 export async function GET(request: NextRequest) {
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const baseQuery = db.select().from(services);
 
     // Build where conditions
-    const whereConditions: any[] = [];
+    const whereConditions: SQL[] = [];
     if (active === 'true') {
       whereConditions.push(eq(services.active, true));
     }

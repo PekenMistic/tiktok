@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database/config';
 import { messages } from '@/lib/database/schema';
-import { desc, eq, and, ilike } from 'drizzle-orm';
+import { desc, eq, and, ilike, SQL } from 'drizzle-orm';
 
 // GET - Fetch all messages
 export async function GET(request: NextRequest) {
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const baseQuery = db.select().from(messages);
 
     // Build where conditions
-    const whereConditions: any[] = [];
+    const whereConditions: SQL[] = [];
     if (status && status !== 'all') {
       whereConditions.push(eq(messages.status, status));
     }

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database/config';
 import { reviews } from '@/lib/database/schema';
-import { desc, eq, and, gte } from 'drizzle-orm';
+import { desc, eq, and, gte, SQL } from 'drizzle-orm';
 
 // GET - Fetch all reviews
 export async function GET(request: NextRequest) {
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     const baseQuery = db.select().from(reviews);
 
     // Build where conditions
-    const whereConditions: any[] = [];
+    const whereConditions: SQL[] = [];
     if (approved === 'true') {
       whereConditions.push(eq(reviews.approved, true));
     } else if (approved === 'false') {
